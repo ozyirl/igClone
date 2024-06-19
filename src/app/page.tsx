@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Post from "~/_Components/Post";
-
+import { SignedOut, SignedIn } from "@clerk/nextjs";
 import { user } from "~/server/db";
 const mockUrls = [
   "https://utfs.io/f/3d688acd-6231-4177-b7cd-b900e97a7618-wkfcr5.webp",
@@ -19,15 +19,17 @@ export default async function HomePage() {
 
   return (
     <main>
-      {/* {users.map((user) => (
-        <div
-          key={user.id}
-          className="flex h-screen items-center justify-center text-xl text-white"
-        >
-          {user.fullName}
+      <SignedOut>
+        <div className="flex h-screen items-center justify-center">
+          <h1 className="text-2xl font-semibold text-white">
+            sign in to see the posts
+          </h1>
         </div>
-      ))} */}
-      <Post />
+      </SignedOut>
+
+      <SignedIn>
+        <Post />
+      </SignedIn>
     </main>
   );
 }

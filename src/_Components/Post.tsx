@@ -1,13 +1,13 @@
 import { fetchImage } from "~/server/db";
-
+import Image from "next/image";
 const Post = async () => {
-  const result = await fetchImage(); // Assuming fetchImage() returns an object with an 'images' array
-  const images = result.images; // Access the 'images' array from the result
+  const result = await fetchImage();
+  const images = result.images;
 
   return (
     <div>
       {images.map((image, index) => (
-        <div key={index}>
+        <div className="mt-16 h-72 w-72" key={index}>
           <img src={image.url || ""} alt="" />
         </div>
       ))}

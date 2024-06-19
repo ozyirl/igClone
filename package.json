@@ -14,6 +14,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@clerk/nextjs": "^5.0.0-beta.46",
     "@neondatabase/serverless": "^0.9.3",
     "@t3-oss/env-nextjs": "^0.10.1",
     "dotenv": "^16.4.5",
