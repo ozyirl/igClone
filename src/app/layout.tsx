@@ -1,4 +1,5 @@
 import "~/styles/globals.css";
+import "@uploadthing/react/styles.css";
 import Image from "next/image";
 import { PageLayout } from "~/_Components/Layout";
 import { GeistSans } from "geist/font/sans";

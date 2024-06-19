@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
+import { UploadButton } from "~/utils/uploadthing";
 import { UserButton, SignInButton } from "@clerk/nextjs";
 type Props = {
   className?: string;
@@ -20,6 +21,10 @@ const TopNav = ({ className }: Props) => {
       <div className="flex flex-row gap-2 ">
         {user.isSignedIn ? (
           <>
+            <div className="">
+              <UploadButton endpoint="imageUploader" />{" "}
+            </div>
+
             <UserButton />
           </>
         ) : (
