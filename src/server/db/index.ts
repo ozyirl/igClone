@@ -4,13 +4,3 @@ import * as schema from "./schema";
 
 const sql = neon(process.env.DATABASE_URL!);
 export const db = drizzle(sql, { schema });
-
-// export async function fetchImage() {
-//   const images = await db
-//     .select({ url: schema.images.url })
-//     .from(schema.images);
-
-//   const imageID = await db.select({ id: schema.images.id }).from(schema.images);
-
-//   return { images, imageID };
-// }

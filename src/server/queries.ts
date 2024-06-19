@@ -10,3 +10,16 @@ export async function getMyImages() {
 
   return images;
 }
+
+// export async function fetchUserId() {
+//   const image = await db.query.images.findFirst({
+//     where: {
+//       userId: images.userId
+//     },
+//     select: {
+//       userId: true,
+//     },
+//   });
+
+//   return image ? image.userId : null;
+// }

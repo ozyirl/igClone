@@ -4,6 +4,7 @@ import { UploadThingError } from "uploadthing/server";
 import { db } from "~/server/db";
 import { images } from "~/server/db/schema";
 
+import { useClerk } from "@clerk/clerk-react";
 const f = createUploadthing();
 
 export const ourFileRouter = {
@@ -11,7 +12,7 @@ export const ourFileRouter = {
     .middleware(async ({ req }) => {
       const user = auth();
 
-      // if (!user.userId) throw new UploadThingError("Unauthorized");
+      if (!user.userId) throw new UploadThingError("Unauthorized");
 
       return { userId: user.userId };
     })
