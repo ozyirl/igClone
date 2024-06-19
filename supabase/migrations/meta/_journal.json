@@ -8,6 +8,13 @@
       "when": 1718789528298,
       "tag": "0000_motionless_tyrannus",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1718819439670,
+      "tag": "0001_clumsy_doomsday",
+      "breakpoints": true
     }
   ]
 }

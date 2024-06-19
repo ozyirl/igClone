@@ -19,15 +19,15 @@ export default async function HomePage() {
 
   return (
     <main>
-      {users.map((user) => (
+      {/* {users.map((user) => (
         <div
           key={user.id}
           className="flex h-screen items-center justify-center text-xl text-white"
         >
           {user.fullName}
         </div>
-      ))}
-      {/* <Post /> */}
+      ))} */}
+      <Post />
     </main>
   );
 }
