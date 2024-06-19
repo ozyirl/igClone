@@ -3,18 +3,14 @@ import { drizzle } from "drizzle-orm/neon-http";
 import * as schema from "./schema";
 
 const sql = neon(process.env.DATABASE_URL!);
-const db = drizzle(sql);
+export const db = drizzle(sql, { schema });
 
-const user = await db.select().from(schema.users);
+// export async function fetchImage() {
+//   const images = await db
+//     .select({ url: schema.images.url })
+//     .from(schema.images);
 
-export async function fetchImage() {
-  const images = await db
-    .select({ url: schema.images.url })
-    .from(schema.images);
+//   const imageID = await db.select({ id: schema.images.id }).from(schema.images);
 
-  const imageID = await db.select({ id: schema.images.id }).from(schema.images);
-
-  return { images, imageID };
-}
-
-export { user };
+//   return { images, imageID };
+// }
