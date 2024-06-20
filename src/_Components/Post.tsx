@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { getMyImages } from "~/server/queries";
-import { useUser } from "@clerk/nextjs";
+
 const Post = async () => {
   const posts = await getMyImages();
   // const user = await fetchUserId()
@@ -12,7 +12,7 @@ const Post = async () => {
             <div className=" flex flex-row rounded-md border-b-[1px] border-white py-2">
               <Image src="/ninja.png" alt="" height={30} width={30}></Image>
               <h1 className="text-lg font-normal text-white">
-                {/* {image.username} */}
+                {image.uploadedBy}
               </h1>
             </div>
             <div className="flex items-center justify-center">

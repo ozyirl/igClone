@@ -3,8 +3,7 @@ import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
 import { db } from "~/server/db";
 import { images } from "~/server/db/schema";
-
-import { useClerk } from "@clerk/clerk-react";
+import { clerkClient } from "@clerk/clerk-sdk-node";
 const f = createUploadthing();
 
 export const ourFileRouter = {
@@ -14,15 +13,21 @@ export const ourFileRouter = {
 
       if (!user.userId) throw new UploadThingError("Unauthorized");
 
+      const userName = await clerkClient.users.getUser(user.userId);
+
       return { userId: user.userId };
     })
     .onUploadComplete(async ({ metadata, file }) => {
+      const user = await clerkClient.users.getUser(metadata.userId); // Fetch user details using clerkClient
+
+      const fullName = `${user.firstName} ${user.lastName}`;
       await db.insert(images).values({
         url: file.url,
         userId: metadata.userId,
+        uploadedBy: fullName,
       });
 
-      return { uploadedBy: metadata.userId };
+      return { uploadedBy: fullName };
     }),
 } satisfies FileRouter;
 
