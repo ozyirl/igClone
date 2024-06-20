@@ -13,18 +13,17 @@ export const ourFileRouter = {
 
       if (!user.userId) throw new UploadThingError("Unauthorized");
 
-      const userName = await clerkClient.users.getUser(user.userId);
-
       return { userId: user.userId };
     })
     .onUploadComplete(async ({ metadata, file }) => {
-      const user = await clerkClient.users.getUser(metadata.userId); // Fetch user details using clerkClient
-
+      const user = await clerkClient.users.getUser(metadata.userId);
+      const profileImage = user.imageUrl;
       const fullName = `${user.firstName} ${user.lastName}`;
       await db.insert(images).values({
         url: file.url,
         userId: metadata.userId,
         uploadedBy: fullName,
+        profileImageUrl: profileImage,
       });
 
       return { uploadedBy: fullName };

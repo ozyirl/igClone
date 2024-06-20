@@ -20,6 +20,7 @@ export const images = pgTable("images", {
   description: text("description"),
   userId: varchar("user_id", { length: 256 }),
   uploadedBy: varchar("uploadedBy", { length: 256 }),
+  profileImageUrl: varchar("profileImageUrl"),
 });
 
 // Likes Table
