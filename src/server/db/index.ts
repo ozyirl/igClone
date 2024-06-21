@@ -8,7 +8,6 @@ import { drizzle } from "drizzle-orm/neon-http";
 config({ path: ".env" });
 
 // Log the environment variable to verify it's loaded
-console.log("DATABASE_URL:", process.env.DATABASE_URL);
 
 if (!process.env.DATABASE_URL) {
   throw new Error("DATABASE_URL environment variable is not set.");
