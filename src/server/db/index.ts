@@ -1,9 +1,18 @@
+// db.ts (Server-side)
 import * as schema from "./schema";
-
-import { drizzle } from "drizzle-orm/neon-http";
 import { neon } from "@neondatabase/serverless";
 import { config } from "dotenv";
-config({ path: ".env" });
-const sql = neon(process.env.DATABASE_URL!);
+import { drizzle } from "drizzle-orm/neon-http";
 
+// Load environment variables from .env file
+config({ path: ".env" });
+
+// Log the environment variable to verify it's loaded
+console.log("DATABASE_URL:", process.env.DATABASE_URL);
+
+if (!process.env.DATABASE_URL) {
+  throw new Error("DATABASE_URL environment variable is not set.");
+}
+
+const sql = neon(process.env.DATABASE_URL!);
 export const db = drizzle(sql, { schema });

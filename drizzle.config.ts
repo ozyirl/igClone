@@ -1,13 +1,12 @@
-import { config } from "dotenv";
-import { defineConfig } from "drizzle-kit";
+import { type Config } from "drizzle-kit";
 
-config({ path: ".env" });
+import { env } from "~/env";
 
-export default defineConfig({
-  schema: "./src/schema.ts",
-  out: "./migrations",
+export default {
+  schema: "./src/server/db/schema.ts",
   dialect: "postgresql",
   dbCredentials: {
-    url: process.env.DATABASE_URL!,
+    url: env.DATABASE_URL,
   },
-});
+  tablesFilter: ["ig-clone_*"],
+} satisfies Config;

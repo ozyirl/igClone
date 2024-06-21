@@ -6,20 +6,13 @@ import { useRouter } from "next/navigation";
 import { UploadButton } from "~/utils/uploadthing";
 import { UserButton, SignInButton } from "@clerk/nextjs";
 import { SimpleUploadButton } from "./simple-upload-button";
-import { clerkClient } from "@clerk/clerk-sdk-node";
-import { createUser } from "~/server/queries";
-import { auth } from "@clerk/nextjs/server";
+
 type Props = {
   className?: string;
 };
 const TopNav = ({ className }: Props) => {
   const router = useRouter();
   const user = useUser();
-  // const backUser = auth();
-  // const user2 =  clerkClient.users.getUser(backUser.userId!);
-  // if (user.isSignedIn) {
-  //   createUser(user2.id, user2.fullName!);
-  // }
 
   return (
     <header className="fixed left-0 right-0 top-0 z-[100] flex items-center justify-between border-b-[1px] border-neutral-900 bg-black/40 px-4 py-4 backdrop-blur-lg">

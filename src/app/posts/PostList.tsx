@@ -54,7 +54,7 @@ const PostList = async () => {
             </div>
           </div>
           <div className="ml-2 mt-16 flex items-center space-x-2 ">
-            <LikeButton userId={image.userId} imageId={image.id} />
+            {/* <LikeButton userId={image.userId} imageId={image.id} /> */}
           </div>
         </div>
       ))}

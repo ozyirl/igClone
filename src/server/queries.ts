@@ -7,12 +7,12 @@ export async function getMyImages() {
   return images;
 }
 
-export async function createUser(userId: string, fullName: string) {
-  await db.insert(users).values({
-    userId: userId,
-    fullName: fullName,
-  });
-}
+// export async function createUser(userId: string, fullName: string) {
+//   await db.insert(users).values({
+//     userId: userId,
+//     fullName: fullName,
+//   });
+// }
 
 export async function imageLiked(
   userId: string,
