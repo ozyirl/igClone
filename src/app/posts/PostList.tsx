@@ -9,6 +9,7 @@ type ImageType = {
   uploadedBy: string | null;
   url: string | null;
   description: string | null;
+  userId: string | null;
 };
 
 const PostList = async () => {
@@ -53,7 +54,7 @@ const PostList = async () => {
             </div>
           </div>
           <div className="ml-2 mt-16 flex items-center space-x-2 ">
-            <LikeButton imageId={image.id} />
+            <LikeButton userId={image.userId} imageId={image.id} />
           </div>
         </div>
       ))}

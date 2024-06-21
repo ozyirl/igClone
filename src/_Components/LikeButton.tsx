@@ -1,16 +1,35 @@
 "use client";
 import { Heart, MessageCircle } from "lucide-react";
 import { useState } from "react";
+import { imageLiked } from "~/server/queries";
 
-type Props = {
+interface LikeButtonProps {
+  userId: string | null;
   imageId: number;
-};
-
-const LikeButton = (props: Props) => {
+}
+const LikeButton = ({
+  imageId,
+  userId,
+}: {
+  imageId: number;
+  userId: string | null;
+}) => {
   const [isLiked, setIsLiked] = useState(false);
 
-  const handleLike = () => {
+  const handleLike = async () => {
     setIsLiked(!isLiked);
+
+    if (userId === null) {
+      console.error("User ID is null, cannot update like status");
+      return;
+    }
+
+    try {
+      await imageLiked(userId, imageId, !isLiked);
+    } catch (error) {
+      console.error("Failed to update like status", error);
+      setIsLiked(isLiked);
+    }
   };
   return (
     <div className="px-1">
