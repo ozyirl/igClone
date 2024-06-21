@@ -2,7 +2,7 @@ import Image from "next/image";
 import { HoverBorderGradient } from "~/_Components/hover-gradient";
 import { getMyImages } from "../../server/queries";
 import LikeButton from "~/_Components/LikeButton";
-import { MessageCircle } from "lucide-react";
+
 type ImageType = {
   id: number;
   profileImageUrl: string | null;
