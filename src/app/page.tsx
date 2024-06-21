@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Post from "~/_Components/Post";
 import { SignedOut, SignedIn } from "@clerk/nextjs";
-
+import PostList from "./posts/PostList";
 const mockUrls = [
   "https://utfs.io/f/3d688acd-6231-4177-b7cd-b900e97a7618-wkfcr5.webp",
   "https://utfs.io/f/3d688acd-6231-4177-b7cd-b900e97a7618-wkfcr5.webp",
@@ -24,7 +24,7 @@ export default async function HomePage() {
       </SignedOut>
 
       <SignedIn>
-        <Post />
+        <PostList />
       </SignedIn>
     </main>
   );

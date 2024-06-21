@@ -5,6 +5,7 @@ import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { UploadButton } from "~/utils/uploadthing";
 import { UserButton, SignInButton } from "@clerk/nextjs";
+import { SimpleUploadButton } from "./simple-upload-button";
 type Props = {
   className?: string;
 };
@@ -22,7 +23,7 @@ const TopNav = ({ className }: Props) => {
         {user.isSignedIn ? (
           <>
             <div className="">
-              <UploadButton endpoint="imageUploader" />{" "}
+              <SimpleUploadButton />{" "}
             </div>
 
             <UserButton />
