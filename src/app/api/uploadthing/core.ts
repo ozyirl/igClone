@@ -2,7 +2,7 @@ import { auth } from "@clerk/nextjs/server";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
 import { db } from "~/server/db";
-import { images } from "~/server/db/schema";
+import { images, users } from "~/server/db/schema";
 import { clerkClient } from "@clerk/clerk-sdk-node";
 const f = createUploadthing();
 
@@ -19,6 +19,12 @@ export const ourFileRouter = {
       const user = await clerkClient.users.getUser(metadata.userId);
       const profileImage = user.imageUrl;
       const fullName = `${user.firstName} ${user.lastName}`;
+
+      await db.insert(users).values({
+        userId: metadata.userId,
+        fullName: fullName,
+      });
+
       await db.insert(images).values({
         url: file.url,
         userId: metadata.userId,

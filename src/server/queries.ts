@@ -1,10 +1,17 @@
 import { db } from "./db";
 import { and, eq } from "drizzle-orm";
-import { likes } from "./db/schema";
+import { likes, users } from "./db/schema";
 export async function getMyImages() {
   const images = await db.query.images.findMany({});
 
   return images;
+}
+
+export async function createUser(userId: string, fullName: string) {
+  await db.insert(users).values({
+    userId: userId,
+    fullName: fullName,
+  });
 }
 
 export async function imageLiked(
