@@ -12,7 +12,6 @@ export const users = pgTable("users", {
   fullName: text("full_name"),
 });
 
-// Define images table
 export const images = pgTable("images", {
   id: serial("id").primaryKey(),
   url: text("url"),
@@ -22,7 +21,6 @@ export const images = pgTable("images", {
   profileImageUrl: varchar("profileImageUrl"),
 });
 
-// Define likes table
 export const likes = pgTable("likes", {
   id: serial("id").primaryKey(),
   userId: varchar("user_id", { length: 256 }).references(() => users.userId),

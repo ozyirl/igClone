@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { HoverBorderGradient } from "~/_Components/hover-gradient";
 import { getMyImages } from "../../server/queries";
-import LikeButton from "~/_Components/LikeButton";
+import LikeButton from "~/app/posts/LikeButton";
 
 type ImageType = {
   id: number;

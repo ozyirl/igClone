@@ -7,31 +7,38 @@ export async function getMyImages() {
   return images;
 }
 
-// export async function createUser(userId: string, fullName: string) {
-//   await db.insert(users).values({
-//     userId: userId,
-//     fullName: fullName,
-//   });
-// }
+export async function createUser(userId: string, fullName: string) {
+  await db.insert(users).values({
+    userId: userId,
+    fullName: fullName,
+  });
+}
+
+export async function findLike(userId: string, imageId: number) {
+  const results = await db
+    .select()
+    .from(likes)
+    .where((likes) => and(eq(likes.userId, userId), eq(likes.imageId, imageId)))
+    .execute(); // Execute the query and get results
+
+  return results[0] || null; // Return the first result if it exists, otherwise return null
+}
+
+export async function removeLike(userId: string, imageId: number) {
+  return await db
+    .delete(likes)
+    .where(and(eq(likes.userId, userId), eq(likes.imageId, imageId)));
+}
 
 export async function imageLiked(
   userId: string,
   imageId: number,
   like: boolean,
 ) {
-  try {
-    if (like) {
-      await db.insert(likes).values({
-        userId,
-        imageId,
-      });
-    } else {
-      await db
-        .delete(likes)
-        .where(and(eq(likes.userId, userId), eq(likes.imageId, imageId)));
-    }
-  } catch (error) {
-    console.error("Failed to update like status", error);
-    throw new Error("Failed to update like status");
+  if (like) {
+    return await db.insert(likes).values({
+      userId: userId, // Corrected property name
+      imageId: imageId,
+    });
   }
 }

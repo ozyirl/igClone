@@ -24,12 +24,7 @@ const TopNav = ({ className }: Props) => {
         {user.isSignedIn ? (
           <>
             <div className="">
-              <UploadButton
-                endpoint="imageUploader"
-                onClientUploadComplete={() => {
-                  router.refresh;
-                }}
-              />
+              <SimpleUploadButton />
             </div>
 
             <UserButton />

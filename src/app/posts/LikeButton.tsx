@@ -1,6 +1,7 @@
 "use client";
+
 import { Heart, MessageCircle } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface LikeButtonProps {
   userId: string | null;
@@ -9,6 +10,31 @@ interface LikeButtonProps {
 
 const LikeButton = ({ imageId, userId }: LikeButtonProps) => {
   const [isLiked, setIsLiked] = useState(false);
+
+  useEffect(() => {
+    if (userId === null) {
+      console.error("User ID is null, cannot fetch like status");
+      return;
+    }
+
+    const fetchLikeStatus = async () => {
+      try {
+        const response = await fetch(
+          `/api/status?userId=${userId}&imageId=${imageId}`,
+        );
+        if (response.ok) {
+          const result = await response.json();
+          setIsLiked(result.isLiked);
+        } else {
+          console.error("Failed to fetch like status");
+        }
+      } catch (error) {
+        console.error("Error fetching like status", error);
+      }
+    };
+
+    fetchLikeStatus();
+  }, [userId, imageId]);
 
   const handleLike = async () => {
     console.log("Like button clicked");
@@ -23,7 +49,7 @@ const LikeButton = ({ imageId, userId }: LikeButtonProps) => {
       console.log(
         `Sending request to API: userId=${userId}, imageId=${imageId}, like=${!isLiked}`,
       );
-      const response = await fetch("app/api/like", {
+      const response = await fetch("/api/like", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -39,7 +65,7 @@ const LikeButton = ({ imageId, userId }: LikeButtonProps) => {
       console.log("API response:", result);
     } catch (error) {
       console.error("Failed to update like status", error);
-      setIsLiked(isLiked); // Revert like state on failure
+      setIsLiked(isLiked);
     }
   };
 
