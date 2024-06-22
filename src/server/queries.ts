@@ -19,9 +19,9 @@ export async function findLike(userId: string, imageId: number) {
     .select()
     .from(likes)
     .where((likes) => and(eq(likes.userId, userId), eq(likes.imageId, imageId)))
-    .execute(); // Execute the query and get results
+    .execute();
 
-  return results[0] || null; // Return the first result if it exists, otherwise return null
+  return results[0] || null;
 }
 
 export async function removeLike(userId: string, imageId: number) {
@@ -37,7 +37,7 @@ export async function imageLiked(
 ) {
   if (like) {
     return await db.insert(likes).values({
-      userId: userId, // Corrected property name
+      userId: userId,
       imageId: imageId,
     });
   }

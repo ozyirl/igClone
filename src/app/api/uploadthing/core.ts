@@ -20,10 +20,12 @@ export const ourFileRouter = {
       const profileImage = user.imageUrl;
       const fullName = `${user.firstName} ${user.lastName}`;
 
-      await db.insert(users).values({
-        userId: metadata.userId,
-        fullName: fullName,
-      });
+      if (!user) {
+        await db.insert(users).values({
+          userId: metadata.userId,
+          fullName: fullName,
+        });
+      }
 
       await db.insert(images).values({
         url: file.url,

@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import { UploadButton } from "~/utils/uploadthing";
 import { UserButton, SignInButton } from "@clerk/nextjs";
 import { SimpleUploadButton } from "./simple-upload-button";
+import { SquarePlus } from "lucide-react";
+import { DialogCloseButton } from "./postModal";
 
 type Props = {
   className?: string;
@@ -23,9 +25,11 @@ const TopNav = ({ className }: Props) => {
       <div className="flex flex-row gap-2 ">
         {user.isSignedIn ? (
           <>
-            <div className="">
+            <button>
+              {/* WIP// POST MODAL  */}
               <SimpleUploadButton />
-            </div>
+              {/* <DialogCloseButton /> */}
+            </button>
 
             <UserButton />
           </>

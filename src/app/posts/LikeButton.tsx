@@ -72,10 +72,10 @@ const LikeButton = ({ imageId, userId }: LikeButtonProps) => {
   return (
     <div className="px-1">
       <button className="px-1" onClick={handleLike}>
-        <Heart fill={isLiked ? "red" : "none"} />
+        <Heart stroke="white" fill={isLiked ? "red" : "none"} />
       </button>
       <button className="px-1">
-        <MessageCircle />
+        <MessageCircle stroke="white" />
       </button>
     </div>
   );

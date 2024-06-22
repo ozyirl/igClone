@@ -1,10 +1,8 @@
-// db.ts (Server-side)
 import * as schema from "./schema";
 import { neon } from "@neondatabase/serverless";
 import { config } from "dotenv";
 import { drizzle } from "drizzle-orm/neon-http";
 
-// Load environment variables from .env file
 config({ path: ".env" });
 
 if (!process.env.DATABASE_URL) {

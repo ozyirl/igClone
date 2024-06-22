@@ -27,7 +27,7 @@ const PostList = async () => {
               <HoverBorderGradient
                 containerClassName="rounded-full"
                 as="button"
-                className=" flex items-center space-x-2 bg-white px-1 text-black dark:bg-black dark:text-white"
+                className=" bg flex items-center space-x-2 px-1 text-white "
               >
                 <Image
                   src={image.profileImageUrl || "/ninja.png"}

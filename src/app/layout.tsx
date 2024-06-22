@@ -3,6 +3,8 @@ import "@uploadthing/react/styles.css";
 import Image from "next/image";
 import { PageLayout } from "~/_Components/Layout";
 import { GeistSans } from "geist/font/sans";
+import { Toaster } from "~/components/ui/sonner";
+
 import TopNav from "~/_Components/NavBar";
 export const metadata = {
   title: "Create T3 App",
@@ -24,6 +26,7 @@ export default function RootLayout({
             <PageLayout>
               <TopNav></TopNav>
               {children}
+              <Toaster />
             </PageLayout>
           </div>
         </body>

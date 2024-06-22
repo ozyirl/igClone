@@ -11,7 +11,6 @@ export async function GET(req: NextRequest) {
     ? parseInt(searchParams.get("imageId") || "0", 10)
     : NaN;
 
-  // Check if userId is null or empty string
   if (!userId || typeof userId !== "string") {
     return new Response(
       JSON.stringify({ error: "Invalid request parameters" }),

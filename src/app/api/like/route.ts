@@ -18,23 +18,19 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Check if the like already exists
     const existingLike = await findLike(userId, imageId);
 
     if (existingLike) {
-      // If like exists and user wants to like, return success
       if (like) {
         console.log("Like already exists");
         return new Response(JSON.stringify({ success: true }), { status: 200 });
       } else {
-        // If like exists and user wants to unlike, remove the like
         await removeLike(userId, imageId);
         console.log("Successfully removed like status");
         return new Response(JSON.stringify({ success: true }), { status: 200 });
       }
     } else {
       if (like) {
-        // If like does not exist and user wants to like, create the like
         await imageLiked(userId, parseInt(imageId, 10), like);
         console.log("Successfully updated like status");
         return new Response(JSON.stringify({ success: true }), { status: 200 });

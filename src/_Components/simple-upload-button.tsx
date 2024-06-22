@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useUploadThing } from "~/utils/uploadthing";
+import { toast } from "sonner";
 import { SquarePlus } from "lucide-react";
 type Input = Parameters<typeof useUploadThing>;
 
@@ -49,34 +50,34 @@ function UploadSVG() {
 export function SimpleUploadButton() {
   const router = useRouter();
 
-  //   const { inputProps } = useUploadThingInputProps("imageUploader", {
-  //     onUploadBegin() {
-  //       toast("uploading...", {
-  //         duration: 100000,
-  //         id: "upload-begin",
-  //       });
-  //     },
-  //     onUploadError(error) {
-  //       toast.dismiss("upload-begin");
-  //       toast.error("Upload failed");
-  //     },
-  //     onClientUploadComplete() {
-  //       toast.dismiss("upload-begin");
-  //       toast.success("upload complete");
-  //       router.refresh();
-  //     },
-  //   });
+  const { inputProps } = useUploadThingInputProps("imageUploader", {
+    onUploadBegin() {
+      toast("uploading...", {
+        duration: 100000,
+        id: "upload-begin",
+      });
+    },
+    onUploadError(error) {
+      toast.dismiss("upload-begin");
+      toast.error("Upload failed");
+    },
+    onClientUploadComplete() {
+      toast.dismiss("upload-begin");
+      toast.success("upload complete");
+      router.refresh();
+    },
+  });
 
   return (
     <div>
       <label htmlFor="upload-button" className="cursor-pointer">
-        <SquarePlus />
+        <SquarePlus stroke="white" />
       </label>
       <input
         id="upload-button"
         type="file"
         className="sr-only"
-        // {...inputProps}
+        {...inputProps}
       />
     </div>
   );
