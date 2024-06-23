@@ -8,7 +8,7 @@ import { UserButton, SignInButton } from "@clerk/nextjs";
 import { SimpleUploadButton } from "./simple-upload-button";
 import { SquarePlus } from "lucide-react";
 import { DialogCloseButton } from "./postModal";
-
+import { ModeToggle } from "./darkModeToggle";
 type Props = {
   className?: string;
 };
@@ -25,6 +25,9 @@ const TopNav = ({ className }: Props) => {
       <div className="flex flex-row gap-2 ">
         {user.isSignedIn ? (
           <>
+            {/* <div className="relative z-50">
+              <ModeToggle />
+            </div> */}
             <button>
               {/* WIP// POST MODAL  */}
               <SimpleUploadButton />

@@ -1,6 +1,7 @@
 import "~/styles/globals.css";
 import "@uploadthing/react/styles.css";
 import Image from "next/image";
+import { ThemeProvider } from "~/components/theme-provider";
 import { PageLayout } from "~/_Components/Layout";
 import { GeistSans } from "geist/font/sans";
 import { Toaster } from "~/components/ui/sonner";
@@ -25,7 +26,14 @@ export default function RootLayout({
           <div className="flex items-center justify-center">
             <PageLayout>
               <TopNav></TopNav>
-              {children}
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+                disableTransitionOnChange
+              >
+                {children}
+              </ThemeProvider>
               <Toaster />
             </PageLayout>
           </div>
