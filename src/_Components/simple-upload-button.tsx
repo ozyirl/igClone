@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useUploadThing } from "~/utils/uploadthing";
 import { toast } from "sonner";
 import { SquarePlus } from "lucide-react";
+import { Button } from "~/components/ui/button";
 type Input = Parameters<typeof useUploadThing>;
 
 const useUploadThingInputProps = (...args: Input) => {
@@ -70,8 +71,10 @@ export function SimpleUploadButton() {
 
   return (
     <div>
-      <label htmlFor="upload-button" className="cursor-pointer">
-        <SquarePlus stroke="white" />
+      <label htmlFor="upload-button" className="cursor-pointer text-white">
+        <div className="flex h-8 w-32 items-center justify-center rounded-sm bg-white">
+          <h1 className="font-medium text-zinc-600">Upload Image</h1>
+        </div>
       </label>
       <input
         id="upload-button"
