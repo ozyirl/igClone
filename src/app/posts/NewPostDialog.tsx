@@ -9,6 +9,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog";
+import Router from "next/navigation";
 import { SimpleUploadButton } from "~/app/posts/simple-upload-button";
 import { Plus } from "lucide-react";
 import { DialogClose } from "@radix-ui/react-dialog";
@@ -20,7 +21,7 @@ export function NewPostDialog() {
   const [imageId, setImageId] = useState<number | null>(null);
   const [caption, setCaption] = useState<string>("");
   const [loading, setLoading] = useState(false);
-
+  const router = Router();
   const handleUploadComplete = (imageId: number) => {
     setImageId(imageId);
     setIsUploaded(true);
@@ -65,8 +66,10 @@ export function NewPostDialog() {
           </DialogTrigger>
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
-              <DialogTitle className="text-white">Make a post</DialogTitle>
-              <DialogDescription>png, jpg, gif</DialogDescription>
+              <DialogTitle className="text-white">Write a caption</DialogTitle>
+              <DialogDescription>
+                or dont lol totally upto you
+              </DialogDescription>
             </DialogHeader>
             <div className="flex items-center space-x-2">
               <div className="grid flex-1 gap-2">
