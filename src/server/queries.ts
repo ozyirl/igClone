@@ -1,6 +1,7 @@
 import { db } from "./db";
 import { and, eq } from "drizzle-orm";
-import { likes, users } from "./db/schema";
+import { likes, users, images } from "./db/schema";
+
 export async function getMyImages() {
   const images = await db.query.images.findMany({});
 
@@ -41,4 +42,20 @@ export async function imageLiked(
       imageId: imageId,
     });
   }
+}
+
+export async function createCaption(imageId: number, caption: string) {
+  await db
+    .update(images)
+    .set({ description: caption })
+    .where(eq(images.id, imageId))
+    .execute();
+}
+
+export async function getCaption(imageId: number) {
+  const images = await db.query.images.findMany({
+    where: (images) => eq(images.id, imageId),
+    limit: 1,
+  });
+  return images[0]?.description ?? null;
 }

@@ -2,7 +2,7 @@ import Image from "next/image";
 import { HoverBorderGradient } from "~/_Components/hover-gradient";
 import { getMyImages } from "../../server/queries";
 import LikeButton from "~/app/posts/LikeButton";
-
+import { useCaptionStore } from "~/store/captionStore";
 type ImageType = {
   id: number;
   profileImageUrl: string | null;
@@ -20,7 +20,7 @@ const PostList = async () => {
       {posts.map((image) => (
         <div
           key={image.id}
-          className="mt-12 flex h-[400px] w-72 flex-col rounded-md border-[1px] border-white"
+          className="mt-12 flex h-[410px] w-72 flex-col rounded-md border-[1px] border-white"
         >
           <div className="mx-2 flex flex-row rounded-md py-2">
             <div className="mx-1 mt-1 flex justify-center text-center">
@@ -55,6 +55,9 @@ const PostList = async () => {
           </div>
           <div className="ml-2 mt-16 flex items-center space-x-2 ">
             <LikeButton userId={image.userId} imageId={image.id} />
+          </div>
+          <div className="ml-4 mt-2">
+            <p className="text-xs font-thin text-white">{image.description}</p>
           </div>
         </div>
       ))}

@@ -4,6 +4,7 @@ import { UploadThingError } from "uploadthing/server";
 import { db } from "~/server/db";
 import { images, users } from "~/server/db/schema";
 import { clerkClient } from "@clerk/clerk-sdk-node";
+import { useCaptionStore } from "~/store/captionStore";
 const f = createUploadthing();
 
 export const ourFileRouter = {

@@ -7,8 +7,9 @@ import { UploadButton } from "~/utils/uploadthing";
 import { UserButton, SignInButton } from "@clerk/nextjs";
 import { SimpleUploadButton } from "./simple-upload-button";
 import { SquarePlus } from "lucide-react";
-import { DialogCloseButton } from "./postModal";
+import { DialogCloseButton } from "../app/posts/CaptionModal";
 import { ModeToggle } from "./darkModeToggle";
+import { NewPostDialog } from "~/app/posts/NewPostDialog";
 type Props = {
   className?: string;
 };
@@ -31,7 +32,8 @@ const TopNav = ({ className }: Props) => {
             <button>
               {/* WIP// POST MODAL  */}
               {/* <SimpleUploadButton /> */}
-              <DialogCloseButton />
+              {/* <DialogCloseButton /> */}
+              <NewPostDialog />
             </button>
 
             <UserButton />
