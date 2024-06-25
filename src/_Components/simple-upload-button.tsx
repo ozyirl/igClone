@@ -29,7 +29,11 @@ const useUploadThingInputProps = (...args: Input) => {
   };
 };
 
-export function SimpleUploadButton() {
+type Props = {
+  onUploadComplete: () => void;
+};
+
+export function SimpleUploadButton({ onUploadComplete }: Props) {
   const router = useRouter();
 
   const { inputProps } = useUploadThingInputProps("imageUploader", {
@@ -46,6 +50,7 @@ export function SimpleUploadButton() {
     onClientUploadComplete() {
       toast.dismiss("upload-begin");
       toast.success("upload complete");
+      onUploadComplete();
       router.refresh();
     },
   });
