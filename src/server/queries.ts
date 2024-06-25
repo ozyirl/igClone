@@ -1,5 +1,5 @@
 import { db } from "./db";
-import { and, eq } from "drizzle-orm";
+import { and, eq, desc } from "drizzle-orm";
 import { likes, users, images } from "./db/schema";
 
 export async function getMyImages() {
@@ -58,4 +58,16 @@ export async function getCaption(imageId: number) {
     limit: 1,
   });
   return images[0]?.description ?? null;
+}
+
+export async function getLatestImage(userId: string) {
+  const results = await db
+    .select()
+    .from(images)
+    .where(eq(images.userId, userId))
+    .orderBy(desc(images.createdAt))
+    .limit(1)
+    .execute();
+
+  return results[0] || null;
 }

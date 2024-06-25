@@ -35,6 +35,7 @@ const PostList = async () => {
                   alt=""
                   height={30}
                   width={30}
+                  style={{ objectFit: "cover" }}
                 />
                 <span className="px-1 font-thin">
                   {image.uploadedBy || "Unknown"}

@@ -14,7 +14,7 @@ import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { Plus } from "lucide-react";
 import { useCaptionStore } from "~/store/captionStore";
-import { SimpleUploadButton } from "../../_Components/simple-upload-button";
+import { SimpleUploadButton } from "./simple-upload-button";
 export function DialogCloseButton() {
   const [caption, setCaption] = useState<string>("");
   const [loading, setLoading] = useState(false);

@@ -29,11 +29,11 @@ const useUploadThingInputProps = (...args: Input) => {
   };
 };
 
-type Props = {
-  onUploadComplete: () => void;
-};
+// type Props = {
+//   onUploadComplete: (imageId: number) => void;
+// };
 
-export function SimpleUploadButton({ onUploadComplete }: Props) {
+export function SimpleUploadButton() {
   const router = useRouter();
 
   const { inputProps } = useUploadThingInputProps("imageUploader", {
@@ -47,10 +47,22 @@ export function SimpleUploadButton({ onUploadComplete }: Props) {
       toast.dismiss("upload-begin");
       toast.error("Upload failed");
     },
-    onClientUploadComplete() {
+    async onClientUploadComplete() {
       toast.dismiss("upload-begin");
       toast.success("upload complete");
-      onUploadComplete();
+
+      try {
+        const response = await fetch("/api/latest-image");
+        if (!response.ok) {
+          throw new Error("Failed to fetch latest image");
+        }
+        const { image } = await response.json();
+        // onUploadComplete(image.id);
+      } catch (error) {
+        console.error(error);
+        toast.error("Failed to fetch latest image");
+      }
+
       router.refresh();
     },
   });
