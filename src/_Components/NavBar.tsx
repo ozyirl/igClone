@@ -31,9 +31,9 @@ const TopNav = ({ className }: Props) => {
             </div> */}
             <button>
               {/* WIP// POST MODAL  */}
-              <SimpleUploadButton />
+              {/* <SimpleUploadButton /> */}
               {/* <DialogCloseButton /> */}
-              {/* <NewPostDialog /> */}
+              <NewPostDialog />
             </button>
 
             <UserButton />

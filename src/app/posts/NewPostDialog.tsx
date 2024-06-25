@@ -111,7 +111,7 @@ export function NewPostDialog() {
               <DialogDescription>png, jpg, gif</DialogDescription>
             </DialogHeader>
             <div className="flex items-center justify-center">
-              <SimpleUploadButton />
+              <SimpleUploadButton onUploadComplete={handleUploadComplete} />
             </div>
             <div className="flex items-start justify-between">
               <DialogClose className="flex justify-end">

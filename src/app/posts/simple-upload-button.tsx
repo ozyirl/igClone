@@ -29,11 +29,11 @@ const useUploadThingInputProps = (...args: Input) => {
   };
 };
 
-// type Props = {
-//   onUploadComplete: (imageId: number) => void;
-// };
+type Props = {
+  onUploadComplete: (imageId: number) => void;
+};
 
-export function SimpleUploadButton() {
+export function SimpleUploadButton({ onUploadComplete }: Props) {
   const router = useRouter();
 
   const { inputProps } = useUploadThingInputProps("imageUploader", {
@@ -57,7 +57,7 @@ export function SimpleUploadButton() {
           throw new Error("Failed to fetch latest image");
         }
         const { image } = await response.json();
-        // onUploadComplete(image.id);
+        onUploadComplete(image.id);
       } catch (error) {
         console.error(error);
         toast.error("Failed to fetch latest image");
