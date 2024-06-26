@@ -9,7 +9,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog";
-import Router from "next/navigation";
+import { useRouter } from "next/navigation";
 import { SimpleUploadButton } from "~/app/posts/simple-upload-button";
 import { Plus } from "lucide-react";
 import { DialogClose } from "@radix-ui/react-dialog";
@@ -21,7 +21,7 @@ export function NewPostDialog() {
   const [imageId, setImageId] = useState<number | null>(null);
   const [caption, setCaption] = useState<string>("");
   const [loading, setLoading] = useState(false);
-  const router = Router();
+  const router = useRouter();
   const handleUploadComplete = (imageId: number) => {
     setImageId(imageId);
     setIsUploaded(true);
@@ -41,12 +41,14 @@ export function NewPostDialog() {
 
       if (response.ok) {
         console.log("Caption saved successfully");
+        setIsUploaded(false);
       } else {
         console.error("Failed to save caption");
       }
     } catch (error) {
       console.error("Failed to save caption:", error);
     } finally {
+      router.refresh();
       setLoading(false);
     }
   };
@@ -84,7 +86,7 @@ export function NewPostDialog() {
                 />
               </div>
             </div>
-            <DialogFooter className="sm:justify-end">
+            <DialogFooter className="px-1 sm:justify-end ">
               <DialogClose asChild>
                 <Button type="button" variant="secondary">
                   Close
@@ -118,7 +120,7 @@ export function NewPostDialog() {
             </div>
             <div className="flex items-start justify-between">
               <DialogClose className="flex justify-end">
-                <Button variant="outline" className="text-white">
+                <Button variant="secondary" className="text-white">
                   Close
                 </Button>
               </DialogClose>
