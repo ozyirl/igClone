@@ -25,7 +25,9 @@ export const ourFileRouter = {
       await db.insert(users).values({
         userId: metadata.userId,
         fullName: fullName,
+        profileImageUrl: profileImage,
       });
+      // }
 
       await db.insert(images).values({
         url: file.url,
