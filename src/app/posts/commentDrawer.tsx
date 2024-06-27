@@ -17,6 +17,8 @@ import {
   CircleFadingPlus,
 } from "lucide-react";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+
 interface CommentDrawerProps {
   userId: string | null;
   imageId: number;
@@ -25,6 +27,8 @@ interface CommentDrawerProps {
 const CommentDrawer = ({ userId, imageId }: CommentDrawerProps) => {
   const [comment, setComment] = useState<string>("");
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
   const handleCommentPost = async () => {
     setLoading(true);
     console.log("comment btn pressed");
@@ -48,6 +52,8 @@ const CommentDrawer = ({ userId, imageId }: CommentDrawerProps) => {
     } catch (error) {
       console.error("failed to post a comment", error);
     } finally {
+      router.refresh();
+      setComment("");
       setLoading(false);
     }
   };
@@ -59,7 +65,6 @@ const CommentDrawer = ({ userId, imageId }: CommentDrawerProps) => {
   return (
     <Drawer>
       <DrawerTrigger>
-        {" "}
         <MessageCircle stroke="white" />
       </DrawerTrigger>
       <DrawerContent>
@@ -73,10 +78,10 @@ const CommentDrawer = ({ userId, imageId }: CommentDrawerProps) => {
         <div className="px-4">
           <Input
             placeholder="add a comment for {user.userId}"
-            className="px-4 text-white "
+            className="px-4 text-white"
             value={comment}
             onChange={handleCommentChange}
-          ></Input>
+          />
         </div>
         <DrawerFooter className="w-42">
           <Button

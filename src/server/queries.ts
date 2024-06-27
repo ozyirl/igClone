@@ -86,11 +86,42 @@ export async function putComment(
 
 export async function getComments(imageId: number) {
   const results = await db
-    .select()
+    .select({
+      id: comments.id,
+      userId: comments.userId,
+      imageId: comments.imageId,
+      content: comments.content,
+      createdAt: comments.createdAt,
+    })
     .from(comments)
     .where(eq(comments.imageId, imageId))
     .orderBy(desc(comments.createdAt))
     .execute();
 
-  return results;
+  const commentsWithUserDetails = await Promise.all(
+    results.map(async (comment) => {
+      const user = await getUserDetails(comment.userId || "user-not-found");
+      return {
+        ...comment,
+        fullName: user?.fullName || "Unknown",
+        profileImageUrl: user?.profileImageUrl || "/default-profile.png",
+      };
+    }),
+  );
+
+  return commentsWithUserDetails;
+}
+
+export async function getUserDetails(userId: string) {
+  const user = await db
+    .select({
+      userId: users.userId,
+      fullName: users.fullName,
+      profileImageUrl: users.profileImageUrl,
+    })
+    .from(users)
+    .where(eq(users.userId, userId))
+    .execute();
+
+  return user[0] || null;
 }

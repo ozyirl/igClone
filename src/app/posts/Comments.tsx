@@ -11,6 +11,8 @@ type Comment = {
   imageId: number;
   content: string;
   createdAt: string;
+  fullName: string;
+  profileImageUrl: string;
 };
 
 const Comments = ({ userId, imageId }: commentProps) => {
@@ -57,10 +59,17 @@ const Comments = ({ userId, imageId }: commentProps) => {
           {comments.map((comment) => (
             <li key={comment.id} className="mb-2 text-white">
               <div className="flex items-start">
-                <div className="mr-2 font-bold">{comment.userId}:</div>
-                <div>{comment.content}</div>
+                <div className="mr-2 flex items-center">
+                  <img
+                    src={comment.profileImageUrl}
+                    alt={comment.fullName}
+                    className="h-8 w-8 rounded-full"
+                  />
+                  <span className="ml-2 font-bold">{comment.fullName}:</span>
+                </div>
+                <div className="mt-1">{comment.content}</div>
               </div>
-              <div className="text-xs text-gray-400">
+              <div className="mt-1 text-xs text-gray-400">
                 {new Date(comment.createdAt).toLocaleString()}
               </div>
             </li>

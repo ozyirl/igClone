@@ -12,6 +12,7 @@ import { sql } from "drizzle-orm";
 export const users = pgTable("users", {
   userId: varchar("username", { length: 256 }).primaryKey(),
   fullName: text("full_name"),
+  profileImageUrl: varchar("profileImageUrl"),
 });
 
 export const images = pgTable("images", {

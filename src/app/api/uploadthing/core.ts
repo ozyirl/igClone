@@ -4,7 +4,7 @@ import { UploadThingError } from "uploadthing/server";
 import { db } from "~/server/db";
 import { images, users } from "~/server/db/schema";
 import { clerkClient } from "@clerk/clerk-sdk-node";
-import { useCaptionStore } from "~/store/captionStore";
+
 const f = createUploadthing();
 
 export const ourFileRouter = {
@@ -21,12 +21,12 @@ export const ourFileRouter = {
       const profileImage = user.imageUrl;
       const fullName = `${user.firstName} ${user.lastName}`;
 
-      if (!user) {
-        await db.insert(users).values({
-          userId: metadata.userId,
-          fullName: fullName,
-        });
-      }
+      // if (!user) {
+      await db.insert(users).values({
+        userId: metadata.userId,
+        fullName: fullName,
+      });
+
       await db.insert(images).values({
         url: file.url,
         userId: metadata.userId,
