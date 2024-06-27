@@ -68,7 +68,7 @@ const CommentDrawer = ({ userId, imageId }: CommentDrawerProps) => {
           <DrawerDescription>please be disrespectful 🥰</DrawerDescription>
         </DrawerHeader>
         <div className="p-4">
-          <Comments />
+          <Comments userId={userId} imageId={imageId} />
         </div>
         <div className="px-4">
           <Input

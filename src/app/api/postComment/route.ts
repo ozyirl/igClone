@@ -1,4 +1,3 @@
-import { error } from "console";
 import type { NextRequest } from "next/server";
 import { putComment } from "~/server/queries";
 export async function POST(req: NextRequest) {

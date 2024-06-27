@@ -2,16 +2,7 @@
 
 import { Heart, MessageCircle } from "lucide-react";
 import { useState, useEffect } from "react";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "~/components/ui/drawer";
+
 import CommentDrawer from "./commentDrawer";
 interface LikeButtonProps {
   userId: string | null;
