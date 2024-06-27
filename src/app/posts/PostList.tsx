@@ -3,6 +3,7 @@ import { HoverBorderGradient } from "~/_Components/hover-gradient";
 import { getMyImages } from "../../server/queries";
 import LikeButton from "~/app/posts/LikeButton";
 import { useCaptionStore } from "~/store/captionStore";
+
 type ImageType = {
   id: number;
   profileImageUrl: string | null;
@@ -20,14 +21,14 @@ const PostList = async () => {
       {posts.map((image) => (
         <div
           key={image.id}
-          className="mt-12 flex h-[410px] w-72 flex-col rounded-md border-[1px] border-white"
+          className="mt-12 flex h-auto max-w-72 flex-col rounded-md border-[1px] border-white"
         >
           <div className="mx-2 flex flex-row rounded-md py-2">
             <div className="mx-1 mt-1 flex justify-center text-center">
               <HoverBorderGradient
                 containerClassName="rounded-full"
                 as="button"
-                className=" bg flex items-center space-x-2 px-1 text-white "
+                className="bg flex items-center space-x-2 px-1 text-white"
               >
                 <Image
                   src={image.profileImageUrl || "/ninja.png"}
@@ -44,20 +45,19 @@ const PostList = async () => {
             </div>
           </div>
           <div className="flex flex-col items-center justify-center">
-            <div className="h-48 w-48">
+            <div className=" relative h-72 w-[286px]  overflow-hidden rounded-md border-white object-cover">
               <Image
                 src={image.url || ""}
                 alt=""
-                width={480}
-                height={480}
-                style={{ objectFit: "contain" }}
+                layout="fill"
+                objectFit="contain"
               />
             </div>
           </div>
-          <div className="ml-2 mt-16 flex items-center space-x-2 ">
+          <div className="ml-2 mt-8 flex items-center space-x-2">
             <LikeButton userId={image.userId} imageId={image.id} />
           </div>
-          <div className="ml-4 mt-2">
+          <div className="mb-8 ml-4 mt-2">
             <p className="text-xs font-thin text-white">{image.description}</p>
           </div>
         </div>
