@@ -2,7 +2,17 @@
 
 import { Heart, MessageCircle } from "lucide-react";
 import { useState, useEffect } from "react";
-
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "~/components/ui/drawer";
+import CommentDrawer from "./commentDrawer";
 interface LikeButtonProps {
   userId: string | null;
   imageId: number;
@@ -70,13 +80,13 @@ const LikeButton = ({ imageId, userId }: LikeButtonProps) => {
   };
 
   return (
-    <div className="px-1">
+    <div className="flex flex-row px-1">
       <button className="px-1" onClick={handleLike}>
         <Heart stroke="white" fill={isLiked ? "red" : "none"} />
       </button>
-      <button className="px-1">
-        <MessageCircle stroke="white" />
-      </button>
+      <div className="mt-1 ">
+        <CommentDrawer />
+      </div>
     </div>
   );
 };

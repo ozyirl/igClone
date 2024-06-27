@@ -32,3 +32,9 @@ export const likes = pgTable("likes", {
   userId: varchar("user_id", { length: 256 }).references(() => users.userId),
   imageId: integer("image_id").references(() => images.id),
 });
+
+export const comments = pgTable("comments", {
+  id: serial("id").primaryKey(),
+  userId: varchar("user_id", { length: 256 }).references(() => users.userId),
+  imageId: integer("image_id").references(() => images.id),
+});
