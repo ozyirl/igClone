@@ -1,6 +1,6 @@
 import { db } from "./db";
 import { and, eq, desc } from "drizzle-orm";
-import { likes, users, images } from "./db/schema";
+import { likes, users, images, comments } from "./db/schema";
 
 export async function getMyImages() {
   const images = await db.query.images.findMany({});
@@ -70,4 +70,27 @@ export async function getLatestImage(userId: string) {
     .execute();
 
   return results[0] || null;
+}
+
+export async function putComment(
+  userId: string,
+  imageId: number,
+  content: string,
+) {
+  await db.insert(comments).values({
+    userId: userId,
+    imageId: imageId,
+    content: content,
+  });
+}
+
+export async function getComments(imageId: number) {
+  const results = await db
+    .select()
+    .from(comments)
+    .where(eq(comments.imageId, imageId))
+    .orderBy(desc(comments.createdAt))
+    .execute();
+
+  return results;
 }

@@ -37,4 +37,9 @@ export const comments = pgTable("comments", {
   id: serial("id").primaryKey(),
   userId: varchar("user_id", { length: 256 }).references(() => users.userId),
   imageId: integer("image_id").references(() => images.id),
+  content: text("content").notNull(),
+  createdAt: timestamp("created_at")
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+  updatedAt: timestamp("updated_at"),
 });
