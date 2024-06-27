@@ -1,17 +1,23 @@
 import { db } from "./db";
 import { and, eq, desc } from "drizzle-orm";
 import { likes, users, images, comments } from "./db/schema";
-
+import { auth } from "@clerk/nextjs/server";
+import { clerkClient } from "@clerk/clerk-sdk-node";
 export async function getMyImages() {
   const images = await db.query.images.findMany({});
 
   return images;
 }
 
-export async function createUser(userId: string, fullName: string) {
+export async function createUser(userId: string) {
+  const user = auth();
+  const profile = await clerkClient.users.getUser(user.userId || "");
+  const profileImageUrl = profile.imageUrl;
+  const fullName = `${profile.firstName} ${profile.lastName}`;
   await db.insert(users).values({
     userId: userId,
     fullName: fullName,
+    profileImageUrl: profileImageUrl,
   });
 }
 
