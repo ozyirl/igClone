@@ -37,6 +37,29 @@ const CommentDrawer = ({ imageId }: CommentDrawerProps) => {
     try {
       console.log("sending post request");
 
+      const userResponse = await fetch("/api/checkUser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId }),
+      });
+
+      if (userResponse.ok) {
+        const userResult = await userResponse.json();
+        if (!userResult.exists) {
+          await fetch("/api/createUser", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ userId }),
+          });
+        }
+      } else {
+        throw new Error("Failed to check user existence");
+      }
+
       const response = await fetch("/api/postComment", {
         method: "POST",
         headers: {
@@ -78,7 +101,7 @@ const CommentDrawer = ({ imageId }: CommentDrawerProps) => {
         </div>
         <div className="px-4">
           <Input
-            placeholder="add a comment for {user.userId}"
+            placeholder="Add a comment"
             className="px-4 text-white"
             value={comment}
             onChange={handleCommentChange}
