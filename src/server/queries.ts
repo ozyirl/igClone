@@ -12,7 +12,7 @@ export async function getMyImages() {
 export async function createUser(userId: string) {
   const profile = await clerkClient.users.getUser(userId);
   const profileImageUrl = profile.imageUrl;
-  const fullName = `${profile.firstName} ${profile.lastName}`;
+  const fullName = `${profile.firstName} ${profile.lastName || ""}`;
   await db.insert(users).values({
     userId: userId,
     fullName: fullName,

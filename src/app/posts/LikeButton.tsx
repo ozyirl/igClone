@@ -2,14 +2,15 @@
 
 import { Heart, MessageCircle } from "lucide-react";
 import { useState, useEffect } from "react";
-
 import CommentDrawer from "./commentDrawer";
+import { useAuth } from "@clerk/nextjs";
 interface LikeButtonProps {
-  userId: string | null;
   imageId: number;
 }
 
-const LikeButton = ({ imageId, userId }: LikeButtonProps) => {
+const LikeButton = ({ imageId }: LikeButtonProps) => {
+  const user = useAuth();
+  const userId = user.userId;
   const [isLiked, setIsLiked] = useState(false);
 
   useEffect(() => {
@@ -47,6 +48,29 @@ const LikeButton = ({ imageId, userId }: LikeButtonProps) => {
     }
 
     try {
+      const userResponse = await fetch("/api/checkUser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId }),
+      });
+
+      if (userResponse.ok) {
+        const userResult = await userResponse.json();
+        if (!userResult.exists) {
+          await fetch("/api/createUser", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ userId }),
+          });
+        }
+      } else {
+        throw new Error("Failed to check user existence");
+      }
+
       console.log(
         `Sending request to API: userId=${userId}, imageId=${imageId}, like=${!isLiked}`,
       );
