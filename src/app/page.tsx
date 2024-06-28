@@ -15,12 +15,13 @@ export default function HomePage() {
       </SignedOut>
 
       <SignedIn>
-        <div className="flex h-screen flex-col items-center justify-center">
+        {/* <div className="flex h-screen flex-col items-center justify-center">
           <h1 className="text-2xl font-semibold text-white">
             Create your profile with just a click
           </h1>
           <CreateProfile />
-        </div>
+        </div> */}
+        <PostList />
       </SignedIn>
     </main>
   );

@@ -19,15 +19,15 @@ export const ourFileRouter = {
     .onUploadComplete(async ({ metadata, file }) => {
       const user = await clerkClient.users.getUser(metadata.userId);
       const profileImage = user.imageUrl;
-      const fullName = `${user.firstName} ${user.lastName}`;
+      const fullName = `${user.firstName} ${user.lastName || ""}`;
 
-      // if (!user) {
-      await db.insert(users).values({
-        userId: metadata.userId,
-        fullName: fullName,
-        profileImageUrl: profileImage,
-      });
-      // }
+      // // if (!user) {
+      // await db.insert(users).values({
+      //   userId: metadata.userId,
+      //   fullName: fullName,
+      //   profileImageUrl: profileImage,
+      // });
+      // // }
 
       await db.insert(images).values({
         url: file.url,

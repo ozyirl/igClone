@@ -18,16 +18,17 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-
+import { useAuth } from "@clerk/nextjs";
 interface CommentDrawerProps {
-  userId: string | null;
   imageId: number;
 }
 
-const CommentDrawer = ({ userId, imageId }: CommentDrawerProps) => {
+const CommentDrawer = ({ imageId }: CommentDrawerProps) => {
   const [comment, setComment] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+
+  const { userId } = useAuth();
 
   const handleCommentPost = async () => {
     setLoading(true);
@@ -73,7 +74,7 @@ const CommentDrawer = ({ userId, imageId }: CommentDrawerProps) => {
           <DrawerDescription>please be disrespectful 🥰</DrawerDescription>
         </DrawerHeader>
         <div className="p-4">
-          <Comments userId={userId} imageId={imageId} />
+          <Comments userId={userId || ""} imageId={imageId} />
         </div>
         <div className="px-4">
           <Input

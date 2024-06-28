@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@clerk/clerk-sdk-node": "^5.0.11",
-    "@clerk/nextjs": "^5.0.0-beta.46",
+    "@clerk/nextjs": "^5.1.6",
     "@neondatabase/serverless": "^0.9.3",
     "@radix-ui/react-dialog": "^1.1.1",
     "@radix-ui/react-dropdown-menu": "^2.1.1",
@@ -51,6 +51,7 @@
     "sonner": "^1.5.0",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
+    "svix": "^1.24.0",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "tls": "^0.0.1",
