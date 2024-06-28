@@ -21,7 +21,7 @@ const PostList = async () => {
       {posts.map((image) => (
         <div
           key={image.id}
-          className="mt-12 flex h-auto max-w-72 flex-col rounded-md border-[1px] border-white"
+          className="mb-6 mt-12 flex h-auto max-w-72 flex-col rounded-md border-[1px] border-white"
         >
           <div className="mx-2 flex flex-row rounded-md py-2">
             <div className="mx-1 mt-1 flex justify-center text-center">
@@ -55,7 +55,7 @@ const PostList = async () => {
             </div>
           </div>
           <div className="ml-2 mt-8 flex items-center space-x-2">
-            <LikeButton userId={image.userId} imageId={image.id} />
+            <LikeButton imageId={image.id} />
           </div>
           <div className="mb-8 ml-4 mt-2">
             <p className="text-xs font-thin text-white">{image.description}</p>
