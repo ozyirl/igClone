@@ -2,7 +2,7 @@ import "~/styles/globals.css";
 import "@uploadthing/react/styles.css";
 import Image from "next/image";
 import { ThemeProvider } from "~/components/theme-provider";
-import { PageLayout } from "~/_Components/Layout";
+
 import { GeistSans } from "geist/font/sans";
 import { Toaster } from "~/components/ui/sonner";
 
@@ -24,18 +24,18 @@ export default function RootLayout({
       <html lang="en" className={`${GeistSans.variable}`}>
         <body>
           <div className="flex items-center justify-center">
-            <PageLayout>
-              <TopNav></TopNav>
-              <ThemeProvider
-                attribute="class"
-                defaultTheme="system"
-                enableSystem
-                disableTransitionOnChange
-              >
-                {children}
-              </ThemeProvider>
-              <Toaster />
-            </PageLayout>
+            {/* <PageLayout> */}
+            <TopNav></TopNav>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              {children}
+            </ThemeProvider>
+            <Toaster />
+            {/* </PageLayout> */}
           </div>
         </body>
       </html>

@@ -4,6 +4,7 @@ import { UploadThingError } from "uploadthing/server";
 import { db } from "~/server/db";
 import { images, users } from "~/server/db/schema";
 import { clerkClient } from "@clerk/clerk-sdk-node";
+import { getUserDetails } from "~/server/queries";
 
 const f = createUploadthing();
 
@@ -21,13 +22,15 @@ export const ourFileRouter = {
       const profileImage = user.imageUrl;
       const fullName = `${user.firstName} ${user.lastName || ""}`;
 
-      // // if (!user) {
-      // await db.insert(users).values({
-      //   userId: metadata.userId,
-      //   fullName: fullName,
-      //   profileImageUrl: profileImage,
-      // });
-      // // }
+      const result = await getUserDetails(metadata.userId);
+
+      if (result === null) {
+        await db.insert(users).values({
+          userId: metadata.userId,
+          fullName: fullName,
+          profileImageUrl: profileImage,
+        });
+      }
 
       await db.insert(images).values({
         url: file.url,

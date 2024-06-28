@@ -75,8 +75,8 @@ const LikeButton = ({ imageId, userId }: LikeButtonProps) => {
       <button className="px-1" onClick={handleLike}>
         <Heart stroke="white" fill={isLiked ? "red" : "none"} />
       </button>
-      <div className="mt-1 ">
-        <CommentDrawer userId={userId} imageId={imageId} />
+      <div className="mt-[5px] ">
+        <CommentDrawer imageId={imageId} />
       </div>
     </div>
   );

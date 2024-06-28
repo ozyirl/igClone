@@ -10,8 +10,7 @@ export async function getMyImages() {
 }
 
 export async function createUser(userId: string) {
-  const user = auth();
-  const profile = await clerkClient.users.getUser(user.userId || "");
+  const profile = await clerkClient.users.getUser(userId);
   const profileImageUrl = profile.imageUrl;
   const fullName = `${profile.firstName} ${profile.lastName}`;
   await db.insert(users).values({
