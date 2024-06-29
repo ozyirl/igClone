@@ -7,6 +7,7 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "~/components/ui/hover-card";
+import Link from "next/link";
 import { Avatar, AvatarImage, AvatarFallback } from "~/components/ui/avatar";
 type ImageType = {
   id: number;
@@ -35,19 +36,20 @@ const PostList = async () => {
                   as="button"
                   className="bg flex items-center space-x-2 px-1 text-white"
                 >
-                  <Image
-                    src={image.profileImageUrl || "/ninja.png"}
-                    className="rounded-full p-[0.8px]"
-                    alt=""
-                    height={30}
-                    width={30}
-                    style={{ objectFit: "cover" }}
-                  />
                   <HoverCardTrigger>
-                    <span className="px-1 font-thin">
-                      {image.uploadedBy || "Unknown"}
-                    </span>
+                    <Image
+                      src={image.profileImageUrl || "/ninja.png"}
+                      className="rounded-full p-[0.8px]"
+                      alt=""
+                      height={30}
+                      width={30}
+                      style={{ objectFit: "cover" }}
+                    />
                   </HoverCardTrigger>
+                  <span className="px-1 font-thin">
+                    <Link href="/profile">{image.uploadedBy || "Unknown"}</Link>
+                  </span>
+
                   <HoverCardContent>
                     <div className="flex justify-between space-x-4">
                       <Avatar>
