@@ -2,8 +2,12 @@ import Image from "next/image";
 import { HoverBorderGradient } from "~/_Components/hover-gradient";
 import { getMyImages } from "../../server/queries";
 import LikeButton from "~/app/posts/LikeButton";
-import { useCaptionStore } from "~/store/captionStore";
-
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "~/components/ui/hover-card";
+import { Avatar, AvatarImage, AvatarFallback } from "~/components/ui/avatar";
 type ImageType = {
   id: number;
   profileImageUrl: string | null;
@@ -25,23 +29,46 @@ const PostList = async () => {
         >
           <div className="mx-2 flex flex-row rounded-md py-2">
             <div className="mx-1 mt-1 flex justify-center text-center">
-              <HoverBorderGradient
-                containerClassName="rounded-full"
-                as="button"
-                className="bg flex items-center space-x-2 px-1 text-white"
-              >
-                <Image
-                  src={image.profileImageUrl || "/ninja.png"}
-                  className="rounded-full p-[0.8px]"
-                  alt=""
-                  height={30}
-                  width={30}
-                  style={{ objectFit: "cover" }}
-                />
-                <span className="px-1 font-thin">
-                  {image.uploadedBy || "Unknown"}
-                </span>
-              </HoverBorderGradient>
+              <HoverCard>
+                <HoverBorderGradient
+                  containerClassName="rounded-full"
+                  as="button"
+                  className="bg flex items-center space-x-2 px-1 text-white"
+                >
+                  <Image
+                    src={image.profileImageUrl || "/ninja.png"}
+                    className="rounded-full p-[0.8px]"
+                    alt=""
+                    height={30}
+                    width={30}
+                    style={{ objectFit: "cover" }}
+                  />
+                  <HoverCardTrigger>
+                    <span className="px-1 font-thin">
+                      {image.uploadedBy || "Unknown"}
+                    </span>
+                  </HoverCardTrigger>
+                  <HoverCardContent>
+                    <div className="flex justify-between space-x-4">
+                      <Avatar>
+                        <AvatarImage src={image.profileImageUrl || ""} />
+                        <AvatarFallback>VC</AvatarFallback>
+                      </Avatar>
+                      <div className=" space-y-1">
+                        <h4 className="text-sm font-semibold">
+                          {image.uploadedBy}
+                        </h4>
+                        <div className="flex items-center">
+                          {/*prettier-ignore */}
+                          <p className="text-md">followers {" "} 20</p>
+                          <br />
+                          <p className="text-md">following 20</p>
+                        </div>
+                      </div>
+                    </div>
+                  </HoverCardContent>
+                </HoverBorderGradient>
+              </HoverCard>
             </div>
           </div>
           <div className="flex flex-col items-center justify-center">
