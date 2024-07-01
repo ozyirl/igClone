@@ -7,7 +7,7 @@ import { UploadButton } from "~/utils/uploadthing";
 import { UserButton, SignInButton } from "@clerk/nextjs";
 import { SimpleUploadButton } from "../app/posts/simple-upload-button";
 import { SquarePlus } from "lucide-react";
-import { DialogCloseButton } from "../app/posts/CaptionModal";
+
 import { ModeToggle } from "./darkModeToggle";
 import { Button } from "~/components/ui/button";
 import { NewPostDialog } from "~/app/posts/NewPostDialog";
@@ -33,7 +33,7 @@ const TopNav = ({ className }: Props) => {
             <button>
               {/* WIP// POST MODAL  */}
               {/* <SimpleUploadButton /> */}
-              {/* <DialogCloseButton /> */}
+
               <NewPostDialog />
             </button>
 
