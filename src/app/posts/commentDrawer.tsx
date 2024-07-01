@@ -116,7 +116,7 @@ const CommentDrawer = ({ imageId }: CommentDrawerProps) => {
             {loading ? <CircleFadingPlus /> : <MessageCirclePlus />}
           </Button>
           <DrawerClose>
-            <Button className="text-white" variant="secondary">
+            <Button className="text-black dark:text-white" variant="secondary">
               Cancel
             </Button>
           </DrawerClose>

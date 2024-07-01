@@ -42,22 +42,24 @@ const Comments = ({ userId, imageId }: commentProps) => {
   }, [userId, imageId]);
 
   if (loading) {
-    return <div className="text-white">Loading comments...</div>;
+    return <div className="text-black">Loading comments...</div>;
   }
 
   if (error) {
-    return <div className="text-white">Error: {error}</div>;
+    return <div className="text-black">Error: {error}</div>;
   }
 
   return (
     <div className="mt-4">
       <div className="item-center flex justify-center border-t-[0.5px] border-slate-50/10">
-        <h1 className="py-1 text-sm font-medium text-white">Comments</h1>
+        <h1 className="py-1 text-sm font-medium text-black dark:text-white">
+          Comments
+        </h1>
       </div>
       {comments.length > 0 ? (
         <ul className="mt-2">
           {comments.map((comment) => (
-            <li key={comment.id} className="mb-2 text-white">
+            <li key={comment.id} className="mb-2 text-black dark:text-white">
               <div className="flex items-start">
                 <div className="mr-2 flex items-center">
                   <img
