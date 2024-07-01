@@ -93,7 +93,9 @@ const CommentDrawer = ({ imageId }: CommentDrawerProps) => {
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
-          <DrawerTitle className="text-white">Comments</DrawerTitle>
+          <DrawerTitle className="text-black dark:text-white">
+            Comments
+          </DrawerTitle>
           <DrawerDescription>please be disrespectful 🥰</DrawerDescription>
         </DrawerHeader>
         <div className="p-4">

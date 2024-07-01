@@ -62,27 +62,33 @@ export function NewPostDialog() {
       {isUploaded ? (
         <Dialog>
           <DialogTrigger asChild>
-            <Button variant="outline">
-              <Plus stroke="white" />
+            <Button variant="outline" className="text-black dark:text-white">
+              new post
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
-              <DialogTitle className="text-white">Write a caption</DialogTitle>
+              <DialogTitle className="text-black dark:text-white">
+                Write a caption
+              </DialogTitle>
               <DialogDescription>
                 or dont lol totally upto you
               </DialogDescription>
             </DialogHeader>
             <div className="flex items-center space-x-2">
               <div className="grid flex-1 gap-2">
-                <Label htmlFor="description" className="sr-only text-white">
+                <Label
+                  htmlFor="description"
+                  className="sr-only text-black dark:text-white"
+                >
                   Caption
                 </Label>
                 <Input
                   id="description"
-                  className="text-white"
+                  className="text-black dark:text-white"
                   value={caption}
                   onChange={handleCaptionChange}
+                  placeholder="caption"
                 />
               </div>
             </div>
@@ -106,13 +112,15 @@ export function NewPostDialog() {
       ) : (
         <Dialog>
           <DialogTrigger asChild>
-            <Button variant="outline">
-              <Plus stroke="white" />
+            <Button variant="outline" className="text-black dark:text-white">
+              new post
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
-              <DialogTitle className="text-white">Make a post</DialogTitle>
+              <DialogTitle className="text-black dark:text-white">
+                Make a post
+              </DialogTitle>
               <DialogDescription>png, jpg, gif</DialogDescription>
             </DialogHeader>
             <div className="flex items-center justify-center">
@@ -120,7 +128,10 @@ export function NewPostDialog() {
             </div>
             <div className="flex items-start justify-between">
               <DialogClose className="flex justify-end">
-                <Button variant="secondary" className="text-white">
+                <Button
+                  variant="secondary"
+                  className=" text-black dark:text-white"
+                >
                   Close
                 </Button>
               </DialogClose>

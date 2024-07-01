@@ -52,9 +52,9 @@ const Comments = ({ userId, imageId }: commentProps) => {
   return (
     <div className="mt-4">
       <div className="item-center flex justify-center border-t-[0.5px] border-slate-50/10">
-        <h1 className="py-1 text-sm font-medium text-black dark:text-white">
+        {/* <h1 className="py-1 text-sm font-medium text-black dark:text-white">
           Comments
-        </h1>
+        </h1> */}
       </div>
       {comments.length > 0 ? (
         <ul className="mt-2">

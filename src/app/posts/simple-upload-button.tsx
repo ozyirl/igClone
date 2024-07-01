@@ -70,8 +70,10 @@ export function SimpleUploadButton({ onUploadComplete }: Props) {
   return (
     <div>
       <label htmlFor="upload-button" className="cursor-pointer text-white">
-        <div className="flex h-8 w-32 items-center justify-center rounded-sm bg-white">
-          <h1 className="font-medium text-zinc-600">Upload Image</h1>
+        <div className="flex h-8 w-32 items-center justify-center rounded-sm bg-black dark:bg-white">
+          <h1 className="font-medium text-zinc-50 dark:text-zinc-600">
+            Upload Image
+          </h1>
         </div>
       </label>
       <input
