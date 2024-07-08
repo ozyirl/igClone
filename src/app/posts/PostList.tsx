@@ -7,6 +7,7 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "~/components/ui/hover-card";
+
 import Link from "next/link";
 import { Avatar, AvatarImage, AvatarFallback } from "~/components/ui/avatar";
 type ImageType = {
@@ -75,12 +76,14 @@ const PostList = async () => {
           </div>
           <div className="flex flex-col items-center justify-center">
             <div className=" relative h-72 w-[286px]  overflow-hidden rounded-md border-white object-cover">
-              <Image
-                src={image.url || ""}
-                alt=""
-                layout="fill"
-                objectFit="contain"
-              />
+              <Link href={`/post/${image.id}`}>
+                <Image
+                  src={image.url || ""}
+                  alt=""
+                  layout="fill"
+                  objectFit="contain"
+                />
+              </Link>
             </div>
           </div>
           <div className="ml-2 mt-8 flex items-center space-x-2">

@@ -16,8 +16,10 @@ import { ClerkProvider } from "@clerk/nextjs";
 
 export default function RootLayout({
   children,
+  modal,
 }: {
   children: React.ReactNode;
+  modal: React.ReactNode;
 }) {
   return (
     <ClerkProvider>
@@ -33,6 +35,7 @@ export default function RootLayout({
               disableTransitionOnChange
             >
               {children}
+              {modal}
             </ThemeProvider>
             <Toaster />
             {/* </PageLayout> */}
