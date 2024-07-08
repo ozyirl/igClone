@@ -4,7 +4,9 @@ import { likes, users, images, comments } from "./db/schema";
 import { auth } from "@clerk/nextjs/server";
 import { clerkClient } from "@clerk/clerk-sdk-node";
 export async function getMyImages() {
-  const images = await db.query.images.findMany({});
+  const images = await db.query.images.findMany({
+    orderBy: (model, { desc }) => desc(model.id),
+  });
 
   return images;
 }

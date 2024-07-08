@@ -48,7 +48,7 @@ const PostList = async () => {
                     />
                   </HoverCardTrigger>
                   <span className="px-1 font-thin">
-                    <Link href={`/user/${image.uploadedBy}`}>
+                    <Link href={`/user/${image.userId}`}>
                       {image.uploadedBy || "Unknown"}
                     </Link>
                   </span>
