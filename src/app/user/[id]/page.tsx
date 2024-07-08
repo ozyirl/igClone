@@ -60,11 +60,17 @@ export default async function UserProfile({
           {userImages.map((image, index) => (
             <div
               key={index}
-              className="mb-2 flex w-1/3 items-start justify-center  rounded-md border-[1px] border-white/25 px-1"
+              className="relative mb-2 flex h-32 w-1/3 items-start justify-center  rounded-md border-[1px] border-white/25 px-1"
               style={{ maxWidth: "33%" }}
             >
               <Link href={`/post/${image.id}`}>
-                <Image src={image.url || ""} height={180} width={180} alt="" />
+                <Image
+                  className="rounded-md"
+                  src={image.url || ""}
+                  alt=""
+                  layout="fill"
+                  objectFit="cover"
+                />
               </Link>
             </div>
           ))}
