@@ -1,4 +1,7 @@
+import "server-only";
+
 import { db } from "./db";
+
 import { and, eq, desc } from "drizzle-orm";
 import { likes, users, images, comments } from "./db/schema";
 import { auth } from "@clerk/nextjs/server";
