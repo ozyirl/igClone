@@ -17,16 +17,17 @@ import { ClerkProvider } from "@clerk/nextjs";
 export default function RootLayout({
   children,
   modal,
+  user,
 }: {
   children: React.ReactNode;
   modal: React.ReactNode;
+  user: React.ReactNode;
 }) {
   return (
     <ClerkProvider>
       <html lang="en" className={`${GeistSans.variable}`}>
         <body>
           <div className="flex items-center justify-center">
-            {/* <PageLayout> */}
             <TopNav></TopNav>
             <ThemeProvider
               attribute="class"
@@ -36,9 +37,9 @@ export default function RootLayout({
             >
               {children}
               {modal}
+              {user}
             </ThemeProvider>
             <Toaster />
-            {/* </PageLayout> */}
           </div>
         </body>
       </html>
