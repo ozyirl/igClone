@@ -1,8 +1,8 @@
 import Image from "next/image";
-import { getUserDetails } from "~/server/queries";
+import { getUserDetails, getUserImages, getImageCount } from "~/server/queries";
 import { Separator } from "~/components/ui/separator";
 
-const images = ["/ninja.png", "/ninja.png", "/ninja.png", "/ninja.png"];
+import Link from "next/link";
 
 export default async function UserProfile({
   params: { id: userid },
@@ -10,6 +10,11 @@ export default async function UserProfile({
   params: { id: string };
 }) {
   const user = await getUserDetails(userid);
+
+  const userImages = await getUserImages(userid);
+
+  const TotalPosts = await getImageCount(userid);
+
   return (
     <>
       <div className="flex flex-col px-2">
@@ -40,25 +45,27 @@ export default async function UserProfile({
                 <div>following</div>
               </div>
               <div className="flex h-5 flex-row items-center justify-around space-x-4 text-sm">
-                <div>NA</div>
+                <div> {TotalPosts}</div>
 
-                <div>NA</div>
+                <div>WIP</div>
 
-                <div>NA</div>
+                <div>WIP</div>
               </div>
             </div>
           </div>
         </div>
         <Separator className="my-4" />
 
-        <div className="flex flex-wrap items-center justify-between">
-          {images.map((image, index) => (
+        <div className="flex flex-wrap gap-2 ">
+          {userImages.map((image, index) => (
             <div
               key={index}
               className="mb-2 flex w-1/3 items-start justify-center  rounded-md border-[1px] border-white/25 px-1"
               style={{ maxWidth: "33%" }}
             >
-              <Image src={image} height={180} width={180} alt="" />
+              <Link href={`/post/${image.id}`}>
+                <Image src={image.url || ""} height={180} width={180} alt="" />
+              </Link>
             </div>
           ))}
         </div>

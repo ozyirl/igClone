@@ -4,7 +4,7 @@ import { db } from "./db";
 
 import { and, eq, desc, count } from "drizzle-orm";
 import { likes, users, images, comments } from "./db/schema";
-import { auth } from "@clerk/nextjs/server";
+
 import { clerkClient } from "@clerk/clerk-sdk-node";
 export async function getMyImages() {
   const images = await db.query.images.findMany({
@@ -12,6 +12,22 @@ export async function getMyImages() {
   });
 
   return images;
+}
+
+export async function getUserImages(userId: string) {
+  const UserImages = await db.query.images.findMany({
+    where: (images, { eq }) => eq(images.userId, userId),
+  });
+
+  return UserImages;
+}
+
+export async function getImageCount(userId: string): Promise<number> {
+  const PostCount = await db.query.images.findMany({
+    where: (images, { eq }) => eq(images.userId, userId),
+  });
+
+  return PostCount.length;
 }
 
 export async function getImageLikes(imageId: number): Promise<number> {
