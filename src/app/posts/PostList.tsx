@@ -7,7 +7,7 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "~/components/ui/hover-card";
-
+import LikeCount from "./LikeCount";
 import Link from "next/link";
 import { Avatar, AvatarImage, AvatarFallback } from "~/components/ui/avatar";
 type ImageType = {
@@ -88,11 +88,25 @@ const PostList = async () => {
               </Link>
             </div>
           </div>
-          <div className="ml-2 mt-8 flex items-center space-x-2">
+
+          <div className="ml-1 mt-8 flex items-center space-x-2">
             <LikeButton imageId={image.id} />
           </div>
-          <div className="mb-8 ml-4 mt-2">
-            <p className="text-xs font-thin text-white">{image.description}</p>
+          <div className="mb-8 ml-4 mt-1">
+            <span>
+              <LikeCount imageId={image.id} />
+              <span className="flex flex-row ">
+                {image.description ? (
+                  <p className="mr-1 text-xs text-white">{image.uploadedBy}</p>
+                ) : (
+                  <></>
+                )}
+
+                <p className="text-xs font-thin text-white">
+                  {image.description}
+                </p>
+              </span>
+            </span>
           </div>
         </div>
       ))}

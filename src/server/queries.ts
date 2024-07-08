@@ -2,7 +2,7 @@ import "server-only";
 
 import { db } from "./db";
 
-import { and, eq, desc } from "drizzle-orm";
+import { and, eq, desc, count } from "drizzle-orm";
 import { likes, users, images, comments } from "./db/schema";
 import { auth } from "@clerk/nextjs/server";
 import { clerkClient } from "@clerk/clerk-sdk-node";
@@ -12,6 +12,14 @@ export async function getMyImages() {
   });
 
   return images;
+}
+
+export async function getImageLikes(imageId: number): Promise<number> {
+  const likes = await db.query.likes.findMany({
+    where: (likes, { eq }) => eq(likes.imageId, imageId),
+  });
+
+  return likes.length;
 }
 
 export async function createUser(userId: string) {
