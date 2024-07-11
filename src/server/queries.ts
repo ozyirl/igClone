@@ -159,3 +159,18 @@ export async function getUserDetails(userId: string) {
 
   return user[0] || null;
 }
+
+export async function getImageDetails(imageId: number) {
+  const ImageDetails = await db
+    .select({
+      userId: images.userId,
+      fullname: images.uploadedBy,
+      profileImageUrl: images.profileImageUrl,
+      url: images.url,
+    })
+    .from(images)
+    .where(eq(images.id, imageId))
+    .execute();
+
+  return ImageDetails[0] || null;
+}
