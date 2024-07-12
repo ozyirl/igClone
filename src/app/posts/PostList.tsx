@@ -11,7 +11,7 @@ import Link from "next/link";
 import { Avatar, AvatarImage, AvatarFallback } from "~/components/ui/avatar";
 import { useEffect, useState, useRef, useCallback } from "react";
 import LikeCount from "./LikeCount";
-import { getPosts } from "~/app/actions/getPosts";
+import { getPosts } from "~/actions/getPosts";
 import { Spinner } from "~/components/ui/spinner";
 
 type ImageType = {
