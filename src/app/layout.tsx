@@ -5,6 +5,7 @@ import { ThemeProvider } from "~/components/theme-provider";
 
 import { GeistSans } from "geist/font/sans";
 import { Toaster } from "~/components/ui/sonner";
+import { TracingBeam } from "~/_Components/tracing-beam";
 
 import TopNav from "~/_Components/NavBar";
 export const metadata = {
@@ -28,16 +29,19 @@ export default function RootLayout({
       <html lang="en" className={`${GeistSans.variable}`}>
         <body>
           <div className="flex items-center justify-center">
-            <TopNav></TopNav>
+            <TopNav />
+
             <ThemeProvider
               attribute="class"
               defaultTheme="system"
               enableSystem
               disableTransitionOnChange
             >
-              {children}
-              {modal}
-              {user}
+              <div>
+                {children}
+                {modal}
+                {user}
+              </div>
             </ThemeProvider>
             <Toaster />
           </div>

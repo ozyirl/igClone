@@ -2,16 +2,27 @@ import { db } from "./db";
 
 import { and, eq, desc, count } from "drizzle-orm";
 import { likes, users, images, comments } from "./db/schema";
-
+import { sql } from "drizzle-orm";
 import { clerkClient } from "@clerk/clerk-sdk-node";
-export async function getMyImages() {
-  const images = await db.query.images.findMany({
-    orderBy: (model, { desc }) => desc(model.id),
-  });
 
-  return images;
+export async function getMyImages(page: number, limit: number) {
+  const offset = (page - 1) * limit;
+
+  const imageResults = await db
+    .select()
+    .from(images)
+    .orderBy(desc(images.id))
+    .limit(limit)
+    .offset(offset);
+
+  const [countResult] = await db
+    .select({
+      count: sql<number>`cast(count(*) as int)`,
+    })
+    .from(images);
+
+  return { images: imageResults, totalCount: countResult?.count };
 }
-
 export async function getUserImages(userId: string) {
   const UserImages = await db.query.images.findMany({
     where: (images, { eq }) => eq(images.userId, userId),

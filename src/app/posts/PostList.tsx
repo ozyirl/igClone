@@ -9,8 +9,11 @@ import {
 } from "~/components/ui/hover-card";
 import Link from "next/link";
 import { Avatar, AvatarImage, AvatarFallback } from "~/components/ui/avatar";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import LikeCount from "./LikeCount";
+import { getPosts } from "~/app/actions/getPosts";
+import { Spinner } from "~/components/ui/spinner";
+
 type ImageType = {
   id: number;
   profileImageUrl: string | null;
@@ -24,30 +27,77 @@ export interface PostListProps {
   initialImages?: ImageType[] | null;
 }
 
+const POSTS_PER_PAGE = 3;
+
 const PostList = ({ initialImages }: PostListProps) => {
   const [images, setImages] = useState<ImageType[]>(initialImages || []);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const observer = useRef<IntersectionObserver | null>(null);
+
+  const lastImageElementRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      if (loading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0]?.isIntersecting && hasMore) {
+          setPage((prevPage) => prevPage + 1);
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [loading, hasMore],
+  );
+
+  const loadMorePosts = useCallback(async () => {
+    if (loading || !hasMore) return;
+    setLoading(true);
+    setError(null);
+    try {
+      const { posts, totalCount, error } = await getPosts(page, POSTS_PER_PAGE);
+      if (error) {
+        throw new Error(error);
+      }
+      if (posts && Array.isArray(posts)) {
+        setImages((prevImages) => {
+          const newImages = posts.filter(
+            (post) => !prevImages.some((prevPost) => prevPost.id === post.id),
+          );
+          return [...prevImages, ...newImages];
+        });
+        setHasMore(images.length + posts.length < totalCount!);
+      } else {
+        console.error("Received invalid posts data:", posts);
+        setHasMore(false);
+      }
+    } catch (err) {
+      console.error("Failed to fetch more posts", err);
+      setError("Failed to load more posts. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
+  }, [page, hasMore, images.length]);
 
   useEffect(() => {
-    const fetchImages = async () => {
-      try {
-        const response = await fetch("/api/getPosts");
-        const data = await response.json();
-        setImages(data.posts);
-      } catch (error) {
-        console.error("Failed to fetch images", error);
-      }
-    };
-
     if (!initialImages) {
-      fetchImages();
+      loadMorePosts();
     }
-  }, [initialImages]);
+  }, [initialImages, loadMorePosts]);
+
+  useEffect(() => {
+    if (page > 1) {
+      loadMorePosts();
+    }
+  }, [page, loadMorePosts]);
 
   return (
     <div className="mt-28">
-      {images.map((image) => (
+      {images.map((image, index) => (
         <div
           key={image.id}
+          ref={index === images.length - 1 ? lastImageElementRef : null}
           className="mb-6 mt-12 flex h-auto max-w-72 flex-col rounded-md border-[1px] border-white"
         >
           <div className="mx-2 flex flex-row rounded-md py-2">
@@ -127,6 +177,15 @@ const PostList = ({ initialImages }: PostListProps) => {
           </div>
         </div>
       ))}
+      {loading && (
+        <div className="flex items-center justify-center py-4">
+          <Spinner />
+        </div>
+      )}
+      {error && <p className="py-4 text-center text-red-500">{error}</p>}
+      {!hasMore && !loading && !error && (
+        <p className="py-4 text-center">No more posts to load</p>
+      )}
     </div>
   );
 };
