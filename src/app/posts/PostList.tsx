@@ -1,15 +1,16 @@
+"use client";
 import Image from "next/image";
 import { HoverBorderGradient } from "~/_Components/hover-gradient";
-import { getMyImages } from "../../server/queries";
 import LikeButton from "~/app/posts/LikeButton";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "~/components/ui/hover-card";
-import LikeCount from "./LikeCount";
 import Link from "next/link";
 import { Avatar, AvatarImage, AvatarFallback } from "~/components/ui/avatar";
+import { useEffect, useState } from "react";
+import LikeCount from "./LikeCount";
 type ImageType = {
   id: number;
   profileImageUrl: string | null;
@@ -19,12 +20,32 @@ type ImageType = {
   userId: string | null;
 };
 
-const PostList = async () => {
-  const posts: ImageType[] = await getMyImages();
+export interface PostListProps {
+  initialImages?: ImageType[] | null;
+}
+
+const PostList = ({ initialImages }: PostListProps) => {
+  const [images, setImages] = useState<ImageType[]>(initialImages || []);
+
+  useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        const response = await fetch("/api/getPosts");
+        const data = await response.json();
+        setImages(data.posts);
+      } catch (error) {
+        console.error("Failed to fetch images", error);
+      }
+    };
+
+    if (!initialImages) {
+      fetchImages();
+    }
+  }, [initialImages]);
 
   return (
     <div className="mt-28">
-      {posts.map((image) => (
+      {images.map((image) => (
         <div
           key={image.id}
           className="mb-6 mt-12 flex h-auto max-w-72 flex-col rounded-md border-[1px] border-white"
@@ -59,13 +80,12 @@ const PostList = async () => {
                         <AvatarImage src={image.profileImageUrl || ""} />
                         <AvatarFallback>VC</AvatarFallback>
                       </Avatar>
-                      <div className=" space-y-1">
+                      <div className="space-y-1">
                         <h4 className="text-sm font-semibold">
                           {image.uploadedBy}
                         </h4>
                         <div className="flex items-center">
-                          {/*prettier-ignore */}
-                          <p className="text-md">followers {" "} 20</p>
+                          <p className="text-md">followers 20</p>
                           <br />
                           <p className="text-md">following 20</p>
                         </div>
@@ -77,7 +97,7 @@ const PostList = async () => {
             </div>
           </div>
           <div className="flex flex-col items-center justify-center">
-            <div className=" relative h-72 w-[286px]  overflow-hidden rounded-md border-white object-cover">
+            <div className="relative h-72 w-[286px] overflow-hidden rounded-md border-white object-cover">
               <Link href={`/post/${image.id}`}>
                 <Image
                   src={image.url || ""}
@@ -98,10 +118,7 @@ const PostList = async () => {
               <span className="flex flex-row ">
                 {image.description ? (
                   <p className="mr-1 text-xs text-white">{image.uploadedBy}</p>
-                ) : (
-                  <></>
-                )}
-
+                ) : null}
                 <p className="text-xs font-thin text-white">
                   {image.description}
                 </p>

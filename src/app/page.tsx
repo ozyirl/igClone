@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { SignedOut, SignedIn } from "@clerk/nextjs";
 import PostList from "./posts/PostList";
+import { LoadMore } from "./posts/LoadMore";
 
 export default function HomePage() {
   return (
@@ -15,6 +15,7 @@ export default function HomePage() {
 
       <SignedIn>
         <PostList />
+        {/* <LoadMore /> */}
       </SignedIn>
     </main>
   );
