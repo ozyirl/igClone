@@ -44,3 +44,16 @@ export const comments = pgTable("comments", {
     .notNull(),
   updatedAt: timestamp("updated_at"),
 });
+
+export const userRelationships = pgTable("user_relationships", {
+  id: serial("id").primaryKey(),
+  followerId: varchar("follower_id", { length: 256 }).references(
+    () => users.userId,
+  ),
+  followingId: varchar("following_id", { length: 256 }).references(
+    () => users.userId,
+  ),
+  createdAt: timestamp("created_at")
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+});
