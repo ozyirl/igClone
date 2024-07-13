@@ -205,3 +205,15 @@ export async function getFollowStatus(followerId: string, followingId: string) {
   });
   return followStatus.length > 0;
 }
+
+export async function unfollowUser(followerId: string, followingId: string) {
+  await db
+    .delete(userRelationships)
+    .where(
+      and(
+        eq(userRelationships.followerId, followerId),
+        eq(userRelationships.followingId, followingId),
+      ),
+    )
+    .execute();
+}

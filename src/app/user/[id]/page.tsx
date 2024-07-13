@@ -6,6 +6,7 @@ import Link from "next/link";
 import { auth } from "@clerk/nextjs/server";
 import { getFollowStatus, followUser } from "~/server/queries";
 
+import { unfollowUser } from "~/server/queries";
 export default async function UserProfile({
   params: { id: profileId },
 }: {
@@ -38,6 +39,20 @@ export default async function UserProfile({
     }
 
     await followUser(userId, profileId);
+  };
+
+  const handleUnfollow = async () => {
+    "use server";
+
+    if (!userId) {
+      throw new Error("Unauthorized");
+    }
+
+    if (!profileId) {
+      throw new Error("Profile doesn't exist");
+    }
+
+    await unfollowUser(userId, profileId);
   };
 
   return (
@@ -81,9 +96,11 @@ export default async function UserProfile({
           {userId !== profileId ? (
             <div>
               {status ? (
-                <Button variant="outline" className="w-[220px]">
-                  Following
-                </Button>
+                <form action={handleUnfollow}>
+                  <Button variant="outline" className="w-[220px]">
+                    Following
+                  </Button>
+                </form>
               ) : (
                 <form action={handleFollow}>
                   <Button className="w-[220px]">Follow</Button>
