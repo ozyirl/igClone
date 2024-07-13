@@ -1,24 +1,49 @@
 import Image from "next/image";
 import { getUserDetails, getUserImages, getImageCount } from "~/server/queries";
 import { Separator } from "~/components/ui/separator";
-
+import { Button } from "~/components/ui/button";
 import Link from "next/link";
+import { auth } from "@clerk/nextjs/server";
+import { getFollowStatus, followUser } from "~/server/queries";
 
 export default async function UserProfile({
-  params: { id: userid },
+  params: { id: profileId },
 }: {
   params: { id: string };
 }) {
-  const user = await getUserDetails(userid);
+  if (!profileId) {
+    throw new Error("Page not found");
+  }
 
-  const userImages = await getUserImages(userid);
+  const user = await getUserDetails(profileId);
+  const userImages = await getUserImages(profileId);
+  const totalPosts = await getImageCount(profileId);
 
-  const TotalPosts = await getImageCount(userid);
+  const { userId } = auth();
+
+  if (!userId) {
+    throw new Error("Unauthorized");
+  }
+
+  const status = await getFollowStatus(userId, profileId);
+
+  const handleFollow = async () => {
+    "use server";
+    if (!userId) {
+      throw new Error("Unauthorized");
+    }
+
+    if (!profileId) {
+      throw new Error("Profile doesn't exist");
+    }
+
+    await followUser(userId, profileId);
+  };
 
   return (
     <>
       <div className="flex flex-col px-2">
-        <div className="mt-48 flex items-center justify-center gap-8">
+        <div className="mt-48 flex items-center justify-center gap-4">
           <div className="px-4">
             <Image
               className="rounded-full"
@@ -37,7 +62,7 @@ export default async function UserProfile({
             </div>
 
             <div className="flex flex-col gap-3">
-              <div className="flex h-5  flex-row items-center justify-between space-x-4 text-sm">
+              <div className="flex h-5 flex-row items-center justify-between space-x-4 text-sm">
                 <div>posts</div>
                 <Separator orientation="vertical" />
                 <div>followers</div>
@@ -45,22 +70,37 @@ export default async function UserProfile({
                 <div>following</div>
               </div>
               <div className="flex h-5 flex-row items-center justify-around space-x-4 text-sm">
-                <div> {TotalPosts}</div>
-
+                <div> {totalPosts}</div>
                 <div>WIP</div>
-
                 <div>WIP</div>
               </div>
             </div>
           </div>
         </div>
+        <div className="pr -mt-6 flex items-center justify-end">
+          {userId !== profileId ? (
+            <div>
+              {status ? (
+                <Button variant="outline" className="w-[220px]">
+                  Following
+                </Button>
+              ) : (
+                <form action={handleFollow}>
+                  <Button className="w-[220px]">Follow</Button>
+                </form>
+              )}
+            </div>
+          ) : (
+            <></>
+          )}
+        </div>
         <Separator className="my-4" />
 
-        <div className="flex flex-wrap gap-2 ">
+        <div className="flex flex-wrap gap-2">
           {userImages.map((image, index) => (
             <div
               key={index}
-              className="relative mb-2 flex h-32 w-1/3 items-start justify-center  rounded-md border-[1px] border-white/25 px-1"
+              className="relative mb-2 flex h-32 w-1/3 items-start justify-center rounded-md border-[1px] border-white/25 px-1"
               style={{ maxWidth: "33%" }}
             >
               <Link href={`/post/${image.id}`}>

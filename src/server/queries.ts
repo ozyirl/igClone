@@ -1,10 +1,11 @@
+import "server-only";
 import { db } from "./db";
 
 import { and, eq, desc, count } from "drizzle-orm";
 import { likes, users, images, comments } from "./db/schema";
 import { sql } from "drizzle-orm";
 import { clerkClient } from "@clerk/clerk-sdk-node";
-
+import { userRelationships } from "./db/schema";
 export async function getMyImages(page: number, limit: number) {
   const offset = (page - 1) * limit;
 
@@ -183,4 +184,24 @@ export async function getImageDetails(imageId: number) {
     .execute();
 
   return ImageDetails[0] || null;
+}
+
+export async function followUser(followerId: string, followingId: string) {
+  await db
+    .insert(userRelationships)
+    .values({
+      followerId,
+      followingId,
+    })
+    .execute();
+}
+
+export async function getFollowStatus(followerId: string, followingId: string) {
+  const followStatus = await db.query.userRelationships.findMany({
+    where: (userRelationships) =>
+      eq(userRelationships.followerId, followerId) &&
+      eq(userRelationships.followingId, followingId),
+    limit: 1,
+  });
+  return followStatus.length > 0;
 }
