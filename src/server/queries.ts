@@ -176,6 +176,7 @@ export async function getImageDetails(imageId: number) {
       fullname: images.uploadedBy,
       profileImageUrl: images.profileImageUrl,
       url: images.url,
+      description: images.description,
     })
     .from(images)
     .where(eq(images.id, imageId))

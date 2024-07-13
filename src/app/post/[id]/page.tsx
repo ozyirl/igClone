@@ -36,10 +36,21 @@ export default async function PhotoModal({
           className="rounded-md"
         />
       </div>
-      <div className="flex items-center justify-start py-2">
+      <div className="ml-1 mt-1 flex flex-col items-start justify-start px-1">
         <LikeCount imageId={Number(photoId)} />
 
-        <LikeButton imageId={Number(photoId)} />
+        <div className="-ml-3">
+          <LikeButton imageId={Number(photoId)} />
+        </div>
+
+        <span className="flex flex-row ">
+          {imageDetails?.description ? (
+            <p className="mr-1 text-xs text-white">{imageDetails.fullname}</p>
+          ) : null}
+          <p className="text-xs font-thin text-white">
+            {imageDetails?.description}
+          </p>
+        </span>
       </div>
     </div>
   );
