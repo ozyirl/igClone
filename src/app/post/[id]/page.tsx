@@ -1,5 +1,6 @@
 import { getImageDetails } from "~/server/queries";
 import Image from "next/image";
+import LikeCount from "~/app/posts/LikeCount";
 import LikeButton from "~/app/posts/LikeButton";
 export default async function PhotoModal({
   params: { id: photoId },
@@ -36,6 +37,8 @@ export default async function PhotoModal({
         />
       </div>
       <div className="flex items-center justify-start py-2">
+        <LikeCount imageId={Number(photoId)} />
+
         <LikeButton imageId={Number(photoId)} />
       </div>
     </div>
