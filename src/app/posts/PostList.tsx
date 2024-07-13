@@ -11,7 +11,7 @@ import Link from "next/link";
 import { Avatar, AvatarImage, AvatarFallback } from "~/components/ui/avatar";
 import { useEffect, useState, useRef, useCallback } from "react";
 import LikeCount from "./LikeCount";
-import { getPosts } from "~/actions/getPosts";
+
 import { Spinner } from "~/components/ui/spinner";
 
 type ImageType = {
@@ -27,7 +27,7 @@ export interface PostListProps {
   initialImages?: ImageType[] | null;
 }
 
-const POSTS_PER_PAGE = 3;
+const POSTS_PER_PAGE = 4;
 
 const PostList = ({ initialImages }: PostListProps) => {
   const [images, setImages] = useState<ImageType[]>(initialImages || []);
@@ -56,22 +56,25 @@ const PostList = ({ initialImages }: PostListProps) => {
     setLoading(true);
     setError(null);
     try {
-      const { posts, totalCount, error } = await getPosts(page, POSTS_PER_PAGE);
-      if (error) {
-        throw new Error(error);
+      const response = await fetch(
+        `/api/getPosts?page=${page}&limit=${POSTS_PER_PAGE}`,
+      );
+      if (!response.ok) throw new Error("Failed to fetch posts");
+      const data = await response.json();
+
+      if (!data.posts || !Array.isArray(data.posts)) {
+        throw new Error("Invalid response format");
       }
-      if (posts && Array.isArray(posts)) {
-        setImages((prevImages) => {
-          const newImages = posts.filter(
-            (post) => !prevImages.some((prevPost) => prevPost.id === post.id),
-          );
-          return [...prevImages, ...newImages];
-        });
-        setHasMore(images.length + posts.length < totalCount!);
-      } else {
-        console.error("Received invalid posts data:", posts);
-        setHasMore(false);
-      }
+
+      setImages((prevImages) => {
+        const newImages = data.posts.filter(
+          (post: any) =>
+            !prevImages.some((prevPost) => prevPost.id === post.id),
+        );
+        return [...prevImages, ...newImages];
+      });
+
+      setHasMore(images.length + data.posts.length < data.totalCount);
     } catch (err) {
       console.error("Failed to fetch more posts", err);
       setError("Failed to load more posts. Please try again later.");
