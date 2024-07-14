@@ -1,10 +1,8 @@
 import Image from "next/image";
 import { getUserDetails, getUserImages, getImageCount } from "~/server/queries";
 import { Separator } from "~/components/ui/separator";
-
 import Link from "next/link";
 import { auth } from "@clerk/nextjs/server";
-
 import FollowButton from "~/_Components/follow-button";
 import UnfollowButton from "~/_Components/unfollow-button";
 
@@ -66,7 +64,7 @@ export default async function UserProfile({
 
   return (
     <>
-      <div className="flex flex-col px-2">
+      <div className="flex flex-col">
         <div className="mt-48 flex items-center justify-center gap-4">
           <div className="px-4">
             <Image
@@ -78,14 +76,14 @@ export default async function UserProfile({
             />
           </div>
 
-          <div className="mb-12 ">
-            <div className=" py-4">
+          <div className="mb-12">
+            <div className="py-4">
               <h1 className="text-md mr-4 text-center font-semibold text-white">
                 {user?.fullName}
               </h1>
             </div>
 
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-4">
               <div className="ml flex h-5 flex-row items-center justify-between space-x-4 text-sm">
                 <div>posts</div>
                 <Separator orientation="vertical" />
@@ -94,7 +92,7 @@ export default async function UserProfile({
                 <div>following</div>
               </div>
               <div className="mx-5 flex h-5 flex-row items-center justify-between space-x-4 text-sm">
-                <div> {totalPosts}</div>
+                <div>{totalPosts}</div>
                 <div>{followCount}</div>
                 <div>{followingCount}</div>
               </div>
@@ -120,12 +118,11 @@ export default async function UserProfile({
         </div>
         <Separator className="my-4" />
 
-        <div className="flex flex-wrap gap-2">
+        <div className="grid grid-cols-3 gap-2">
           {userImages.map((image, index) => (
             <div
               key={index}
-              className="relative mb-2 flex h-32 w-1/3 items-start justify-center rounded-md border-[1px] border-white/25 px-1"
-              style={{ maxWidth: "33%" }}
+              className="relative mb-2 flex h-28 items-start justify-center rounded-md border-[1px] border-white/25"
             >
               <Link href={`/post/${image.id}`}>
                 <Image
