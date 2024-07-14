@@ -8,6 +8,8 @@ import { getFollowStatus, followUser } from "~/server/queries";
 import FollowButton from "~/_Components/follow-button";
 import UnfollowButton from "~/_Components/unfollow-button";
 import { unfollowUser } from "~/server/queries";
+import { getFollowerCount } from "~/server/queries";
+
 export default async function UserProfile({
   params: { id: profileId },
 }: {
@@ -17,15 +19,15 @@ export default async function UserProfile({
     throw new Error("Page not found");
   }
 
-  const user = await getUserDetails(profileId);
-  const userImages = await getUserImages(profileId);
-  const totalPosts = await getImageCount(profileId);
-
   const { userId } = auth();
 
   if (!userId) {
     throw new Error("Unauthorized");
   }
+  const user = await getUserDetails(profileId);
+  const userImages = await getUserImages(profileId);
+  const totalPosts = await getImageCount(profileId);
+  const followCount = await getFollowerCount(profileId);
 
   const status = await getFollowStatus(userId, profileId);
 
@@ -87,7 +89,7 @@ export default async function UserProfile({
               </div>
               <div className="flex h-5 flex-row items-center justify-around space-x-4 text-sm">
                 <div> {totalPosts}</div>
-                <div>WIP</div>
+                <div>{followCount}</div>
                 <div>WIP</div>
               </div>
             </div>
