@@ -1,14 +1,20 @@
 import Image from "next/image";
 import { getUserDetails, getUserImages, getImageCount } from "~/server/queries";
 import { Separator } from "~/components/ui/separator";
-import { Button } from "~/components/ui/button";
+
 import Link from "next/link";
 import { auth } from "@clerk/nextjs/server";
-import { getFollowStatus, followUser } from "~/server/queries";
+
 import FollowButton from "~/_Components/follow-button";
 import UnfollowButton from "~/_Components/unfollow-button";
-import { unfollowUser } from "~/server/queries";
-import { getFollowerCount } from "~/server/queries";
+
+import {
+  getFollowerCount,
+  getFollowingCount,
+  unfollowUser,
+  getFollowStatus,
+  followUser,
+} from "~/server/queries";
 
 export default async function UserProfile({
   params: { id: profileId },
@@ -28,7 +34,7 @@ export default async function UserProfile({
   const userImages = await getUserImages(profileId);
   const totalPosts = await getImageCount(profileId);
   const followCount = await getFollowerCount(profileId);
-
+  const followingCount = await getFollowingCount(profileId);
   const status = await getFollowStatus(userId, profileId);
 
   const handleFollow = async () => {
@@ -73,24 +79,24 @@ export default async function UserProfile({
           </div>
 
           <div className="mb-12 ">
-            <div className="gap-4 py-4">
-              <h1 className="text-md text-center text-white">
+            <div className=" py-4">
+              <h1 className="text-md mr-4 text-center font-semibold text-white">
                 {user?.fullName}
               </h1>
             </div>
 
             <div className="flex flex-col gap-3">
-              <div className="flex h-5 flex-row items-center justify-between space-x-4 text-sm">
+              <div className="ml flex h-5 flex-row items-center justify-between space-x-4 text-sm">
                 <div>posts</div>
                 <Separator orientation="vertical" />
                 <div>followers</div>
                 <Separator orientation="vertical" />
                 <div>following</div>
               </div>
-              <div className="flex h-5 flex-row items-center justify-around space-x-4 text-sm">
+              <div className="mx-5 flex h-5 flex-row items-center justify-between space-x-4 text-sm">
                 <div> {totalPosts}</div>
                 <div>{followCount}</div>
-                <div>WIP</div>
+                <div>{followingCount}</div>
               </div>
             </div>
           </div>

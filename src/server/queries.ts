@@ -56,6 +56,16 @@ export async function getFollowerCount(userId: string) {
 
   return result.length;
 }
+
+export async function getFollowingCount(userId: string) {
+  const result = await db.query.userRelationships.findMany({
+    where: (userRelationships, { eq }) =>
+      eq(userRelationships.followerId, userId),
+  });
+
+  return result.length;
+}
+
 export async function createUser(userId: string) {
   const profile = await clerkClient.users.getUser(userId);
   const profileImageUrl = profile.imageUrl;
