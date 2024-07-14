@@ -5,7 +5,7 @@ import { Button } from "~/components/ui/button";
 import Link from "next/link";
 import { auth } from "@clerk/nextjs/server";
 import { getFollowStatus, followUser } from "~/server/queries";
-
+import FollowButton from "~/_Components/follow-button";
 import { unfollowUser } from "~/server/queries";
 export default async function UserProfile({
   params: { id: profileId },
@@ -103,7 +103,7 @@ export default async function UserProfile({
                 </form>
               ) : (
                 <form action={handleFollow}>
-                  <Button className="w-[220px]">Follow</Button>
+                  <FollowButton />
                 </form>
               )}
             </div>
