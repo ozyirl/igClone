@@ -105,48 +105,26 @@ const PostList = ({ initialImages }: PostListProps) => {
         >
           <div className="mx-2 flex flex-row rounded-md py-2">
             <div className="mx-1 mt-1 flex justify-center text-center">
-              <HoverCard>
-                <HoverBorderGradient
-                  containerClassName="rounded-full"
-                  as="button"
-                  className="bg flex items-center space-x-2 px-1 text-white"
-                >
-                  <HoverCardTrigger>
-                    <Image
-                      src={image.profileImageUrl || "/ninja.png"}
-                      className="rounded-full p-[0.8px]"
-                      alt=""
-                      height={30}
-                      width={30}
-                      style={{ objectFit: "cover" }}
-                    />
-                  </HoverCardTrigger>
-                  <span className="px-1 font-thin">
-                    <Link href={`/user/${image.userId}`}>
-                      {image.uploadedBy || "Unknown"}
-                    </Link>
-                  </span>
+              <HoverBorderGradient
+                containerClassName="rounded-full"
+                as="button"
+                className="bg flex items-center space-x-2 px-1 text-white"
+              >
+                <Image
+                  src={image.profileImageUrl || "/ninja.png"}
+                  className="rounded-full p-[0.8px]"
+                  alt=""
+                  height={30}
+                  width={30}
+                  style={{ objectFit: "cover" }}
+                />
 
-                  <HoverCardContent>
-                    <div className="flex justify-between space-x-4">
-                      <Avatar>
-                        <AvatarImage src={image.profileImageUrl || ""} />
-                        <AvatarFallback>VC</AvatarFallback>
-                      </Avatar>
-                      <div className="space-y-1">
-                        <h4 className="text-sm font-semibold">
-                          {image.uploadedBy}
-                        </h4>
-                        <div className="flex items-center">
-                          <p className="text-md">followers 20</p>
-                          <br />
-                          <p className="text-md">following 20</p>
-                        </div>
-                      </div>
-                    </div>
-                  </HoverCardContent>
-                </HoverBorderGradient>
-              </HoverCard>
+                <span className="px-1 font-thin">
+                  <Link href={`/user/${image.userId}`}>
+                    {image.uploadedBy || "Unknown"}
+                  </Link>
+                </span>
+              </HoverBorderGradient>
             </div>
           </div>
           <div className="flex flex-col items-center justify-center">
